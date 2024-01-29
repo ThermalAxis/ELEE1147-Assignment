@@ -16,10 +16,14 @@ int main() {
   while (1) {
     printf("==== Telemetry Data Explorer ====\n");
     printf("1. Display All Data\n");
-    printf("2. Filter by Sensor Type\n");
-    printf("3. Exit\n");
+    printf("2. Filter by Location\n");
+    printf("3. Filter by Sensor Type\n");
+    printf("4. Filter by Sensor ID\n");
+    printf("5. Statistics Functions\n");
+    printf("6. Export to CSV\n");
+    printf("7. Exit\n");
 
-    printf("Enter your choice (1-3): ");
+    printf("Enter your choice (1-7): ");
 
 #if (_MSC_VER > 1600)
     
@@ -45,15 +49,27 @@ int main() {
       displayAllData(telemetryArray, arraySize);
       break;
     case 2:
-      filterBySensorType(telemetryArray, arraySize);
+      filterByLocation(telemetryArray, arraySize);
       break;
     case 3:
+      filterBySensorType(telemetryArray, arraySize);
+      break;
+    case 4:
+      filterBySensorID(telemetryArray, arraySize);
+      break;
+    case 5:
+      printf("Not yet implemented.");
+      break;
+    case 6:
+      printf("Not yet implemented.");
+      break;
+    case 7:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");
       // Don't forget to free allocated memory if needed
       free(telemetryArray);
       return 0;
     default:
-      printf("Invalid choice. Please enter a number between 1 and 3.\n");
+      printf("Invalid choice. Please enter a number between 1 and 7.\n");
     }
   }
   return 0;

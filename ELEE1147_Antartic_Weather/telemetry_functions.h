@@ -30,9 +30,31 @@ void displayAllData(TelemetryData *telemetryArray, int arraySize);
  * @param arraySize The size of the telemetryArray.
  */
 void filterBySensorType(TelemetryData *telemetryArray, int arraySize);
-
 #pragma endregion // DO NOT TOUCH
 
 // YOUR CODE BELOW THIS LINE
+
+
+/**
+ * @brief Filter telemetry data by location name.
+ *
+ * This function prompts the user to enter a location name and
+ * then prints telemetry data for the specified location.
+ *
+ * @param telemetryArray An array of TelemetryData structures.
+ * @param arraySize The size of the telemetryArray.
+ */
+void filterByLocation(TelemetryData* telemetryArray, int arraySize);
+
+/**
+ * @brief Filter telemetry data by sensor ID.
+ *
+ * This function prompts the user to enter a sensor ID and
+ * then prints telemetry data for the specified sensor ID.
+ *
+ * @param telemetryArray An array of TelemetryData structures.
+ * @param arraySize The size of the telemetryArray.
+ */
+void filterBySensorID(TelemetryData* telemetryArray, int arraySize);
 
 #endif // TELEMETRY_FUNCTIONS_H
