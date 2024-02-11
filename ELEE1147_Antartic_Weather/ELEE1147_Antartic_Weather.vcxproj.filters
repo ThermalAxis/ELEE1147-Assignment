@@ -30,6 +30,12 @@
     <ClCompile Include="telemetry_functions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="statistics_functions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exportCSV.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cJSON.h">
@@ -42,6 +48,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="telemetry_struct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="statistics_functions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exportCSV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
