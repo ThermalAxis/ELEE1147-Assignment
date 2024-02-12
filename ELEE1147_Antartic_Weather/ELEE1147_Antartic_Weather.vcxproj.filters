@@ -36,6 +36,9 @@
     <ClCompile Include="exportCSV.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="weatherConditions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cJSON.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="exportCSV.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="weatherConditions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
