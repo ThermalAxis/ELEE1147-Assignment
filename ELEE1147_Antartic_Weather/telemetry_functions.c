@@ -90,5 +90,4 @@ void filterByLocation(TelemetryData *telemetryArray, int arraySize) {
              telemetryArray[i].measurement, telemetryArray[i].status);
     }
   }
-  // printf("\n\n\nArraySize: %i\n\n", arraySize);
 }
