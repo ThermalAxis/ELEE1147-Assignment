@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void weatherConditions(TelemetryData* telemetryArray, int arraySize)
-{
-	printf("There's nothing here yet.\n");
+void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
+  printf("There's nothing here yet.\n");
 }

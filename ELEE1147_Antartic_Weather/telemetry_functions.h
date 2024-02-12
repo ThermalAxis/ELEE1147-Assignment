@@ -34,7 +34,6 @@ void filterBySensorType(TelemetryData *telemetryArray, int arraySize);
 
 // YOUR CODE BELOW THIS LINE
 
-
 /**
  * @brief Filter telemetry data by location name.
  *
@@ -44,7 +43,7 @@ void filterBySensorType(TelemetryData *telemetryArray, int arraySize);
  * @param telemetryArray An array of TelemetryData structures.
  * @param arraySize The size of the telemetryArray.
  */
-void filterByLocation(TelemetryData* telemetryArray, int arraySize);
+void filterByLocation(TelemetryData *telemetryArray, int arraySize);
 
 /**
  * @brief Filter telemetry data by sensor ID.
@@ -55,6 +54,6 @@ void filterByLocation(TelemetryData* telemetryArray, int arraySize);
  * @param telemetryArray An array of TelemetryData structures.
  * @param arraySize The size of the telemetryArray.
  */
-void filterBySensorID(TelemetryData* telemetryArray, int arraySize);
+void filterBySensorID(TelemetryData *telemetryArray, int arraySize);
 
 #endif // TELEMETRY_FUNCTIONS_H

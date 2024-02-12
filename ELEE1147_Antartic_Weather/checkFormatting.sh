@@ -63,7 +63,7 @@ for file in $files; do
 done
 
 # delete temp file, you could comment to see each file differnce...
-#rm $cp_of_file
+rm $cp_of_file
 
 # Print summary
 if [ "$differences_found" -eq 1 ]; then

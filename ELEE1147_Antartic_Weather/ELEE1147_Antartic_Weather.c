@@ -1,7 +1,7 @@
-#include "json_parser.h"
-#include "telemetry_functions.h"
-#include "statistics_functions.h"
 #include "exportCSV.h"
+#include "json_parser.h"
+#include "statistics_functions.h"
+#include "telemetry_functions.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -29,21 +29,23 @@ int main() {
     printf("Enter your choice (1-8): ");
 
 #if (_MSC_VER > 1600)
-    
+
     status = scanf_s("%d", &choice);
-   
+
     while (status != 1) {
-        while ((garbage = getchar()) != EOF && garbage != '\n');
-        printf("Invalid input... please enter a number: ");
-        status = scanf_s("%d", &choice);
+      while ((garbage = getchar()) != EOF && garbage != '\n')
+        ;
+      printf("Invalid input... please enter a number: ");
+      status = scanf_s("%d", &choice);
     }
 
 #else
     scanf("%d", &choice);
     while (status != 1) {
-        while ((garbage = getchar()) != EOF && garbage != '\n');
-        printf("Invalid input... please enter a number: ");
-        status = scanfs("%d", &choice);
+      while ((garbage = getchar()) != EOF && garbage != '\n')
+        ;
+      printf("Invalid input... please enter a number: ");
+      status = scanfs("%d", &choice);
     }
 #endif
 
