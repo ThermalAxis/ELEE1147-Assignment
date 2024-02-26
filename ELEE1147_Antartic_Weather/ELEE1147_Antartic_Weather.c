@@ -17,7 +17,7 @@ int main() {
 
   // Main menu
   while (1) {
-      system("cls");
+    system("cls");
     printf("==== Telemetry Data Explorer ====\n");
     printf("1. Display All Data\n");
     printf("2. Weather Conditions\n");

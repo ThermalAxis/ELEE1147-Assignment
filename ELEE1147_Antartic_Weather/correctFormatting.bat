@@ -1,5 +1,7 @@
 @echo off
 setlocal enableextensions enabledelayedexpansion
+:: written by Connor Philpott
+
 
 title Correct C Language Formatting
 echo Correct C Language Formatting
