@@ -17,6 +17,7 @@ int main() {
 
   // Main menu
   while (1) {
+    system("cls");
     printf("==== Telemetry Data Explorer ====\n");
     printf("1. Display All Data\n");
     printf("2. Weather Conditions\n");
@@ -27,7 +28,7 @@ int main() {
     printf("7. Export to CSV\n");
     printf("8. Exit\n");
 
-    printf("Enter your choice (1-8): ");
+    printf("\nEnter your choice (1-8): ");
 
 #if (_MSC_VER > 1600)
 
@@ -53,6 +54,8 @@ int main() {
     switch (choice) {
     case 1:
       displayAllData(telemetryArray, arraySize);
+      printf("Press any key to return to main menu...");
+      system("pause>nul");
       break;
     case 2:
       weatherConditions(telemetryArray, arraySize);
@@ -67,10 +70,12 @@ int main() {
       filterBySensorID(telemetryArray, arraySize);
       break;
     case 6:
-      printf("Not yet implemented.\n");
+      statisticsFunctions(telemetryArray, arraySize);
+      system("timeout /T 3 >nul");
       break;
     case 7:
       exportCSV(telemetryArray, arraySize);
+      system("timeout /T 3 >nul");
       break;
     case 8:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");
