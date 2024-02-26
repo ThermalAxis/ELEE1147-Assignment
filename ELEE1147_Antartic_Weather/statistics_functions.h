@@ -4,4 +4,6 @@
 
 #include "json_parser.h" // YOU CAN ADD OTHER HEADERS UNDERNEATH OR ABOVE
 
+int statisticsFunctions(TelemetryData* telemetryArray, int arraySize);
+
 #endif

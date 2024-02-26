@@ -70,10 +70,12 @@ int main() {
       filterBySensorID(telemetryArray, arraySize);
       break;
     case 6:
-      printf("Not yet implemented.\n");
+      statisticsFunctions(telemetryArray, arraySize);
+      system("timeout /T 3 >nul");
       break;
     case 7:
       exportCSV(telemetryArray, arraySize);
+      system("timeout /T 3 >nul");
       break;
     case 8:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");
