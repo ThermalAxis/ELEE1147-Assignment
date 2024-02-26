@@ -21,7 +21,6 @@ echo Processing file !i! of %j%
 echo %%b
 echo.
 start /wait /B .\clang-format.exe -style=file .\msvc.conf -i %%b
-pause
 )
 
 cls
