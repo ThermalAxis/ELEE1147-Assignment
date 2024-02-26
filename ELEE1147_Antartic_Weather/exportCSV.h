@@ -8,8 +8,6 @@
 
 #include "json_parser.h" // YOU CAN ADD OTHER HEADERS UNDERNEATH OR ABOVE
 
-void exportCSV(TelemetryData *telemetryArray, int arraySize);
-
-void exportBySensorType(TelemetryData* telemetryArray, int arraySize, FILE *outputFile);
+int exportCSV(TelemetryData *telemetryArray, int arraySize);
 
 #endif
