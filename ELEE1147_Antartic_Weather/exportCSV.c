@@ -13,22 +13,15 @@ void exportCSV(TelemetryData *telemetryArray, int arraySize) {
     }
 
   printf("Do you want to filter the data first? [Y/n]\n");
-  while (getchar() != '\n')
-      ; // clear previous carriage return
-  int exportSelect = 0;
-  scanf_s("%i", &exportSelect);
+  while (getchar() != '\n'); // clear previous carriage return
+  char exportSelect;
+  scanf_s("%c", &exportSelect);
 
-  switch (exportSelect) {
-  default:
-      break;
+  //printf("exportSelect is %c\n", exportSelect);
 
-
-
-  }
-
-  if (exportSelect == "n" || exportSelect == "N") {
+  if (exportSelect == 'n' || exportSelect == 'N') {
       // Write all data to the output file
-      printf("writing data...");
+      printf("Writing data...");
       if (fprintf(
           outputFile,
           "Timestamp, sensorID, SensorType, Location, Measurement, Status\n") <
@@ -40,66 +33,47 @@ void exportCSV(TelemetryData *telemetryArray, int arraySize) {
       }
       else {
           for (int i = 0; i < arraySize; ++i) {
-              fprintf(outputFile, "%s,%s,%s,%s,%.2f,%s\n", telemetryArray[i].timestamp,
-                  telemetryArray[i].sensorID, telemetryArray[i].sensorType,
-                  telemetryArray[i].location, telemetryArray[i].measurement,
-                  telemetryArray[i].status);
+              fprintf(outputFile, "%s,%s,%s,%s,%.2f,%s\n", 
+                  telemetryArray[i].timestamp,   telemetryArray[i].sensorID, 
+                  telemetryArray[i].sensorType,  telemetryArray[i].location, 
+                  telemetryArray[i].measurement, telemetryArray[i].status);
           }
       }
       fclose(outputFile); // Close outputFile
-      printf("\nCSV file export successful!\n");
+      printf("\nCSV file export successful!\n\n");
       return 0; // Exit successfully
   }
-  else if (exportSelect == "y" || exportSelect == "Y") {
+  else if (exportSelect == 'y' || exportSelect == 'Y') {
     // filter data and export to file.
-      printf("writing filtered data...");
+ 
   }
   else {
-      if (fprintf(
-          outputFile,
-          "Timestamp, sensorID, SensorType, Location, Measurement, Status\n") <
-          0) {
-          // Handle output error using perror()
-          perror("Error writing output to file");
-          fclose(outputFile); // Close the output file before exiting
-          return 1;           // Exit with an error code
-      }
-      else {
-          for (int i = 0; i < arraySize; ++i) {
-              fprintf(outputFile, "%s,%s,%s,%s,%.2f,%s\n",
-                  telemetryArray[i].timestamp,
-                  telemetryArray[i].sensorID, telemetryArray[i].sensorType,
-                  telemetryArray[i].location, telemetryArray[i].measurement,
-                  telemetryArray[i].status);
-          }
-      }
+      printf("Invalid input, returning to main menu.\n\n");
       return 0;
   }
-
-
 }
 
-int exportAllData(TelemetryData *telemetryArray, int arraySize, FILE *outputFile) {
-    if (fprintf(
-        outputFile,
-        "Timestamp, sensorID, SensorType, Location, Measurement, Status\n") <
-        0) {
-        // Handle output error using perror()
-        perror("Error writing output to file");
-        fclose(outputFile); // Close the output file before exiting
-        return 1;           // Exit with an error code
-    }
-    else {
-        for (int i = 0; i < arraySize; ++i) {
-            fprintf(outputFile, "%s,%s,%s,%s,%.2f,%s\n",
-                telemetryArray[i].timestamp,
-                telemetryArray[i].sensorID, telemetryArray[i].sensorType,
-                telemetryArray[i].location, telemetryArray[i].measurement,
-                telemetryArray[i].status);
-        }
-    }
-    return 0;
-}
+//int exportAllData(TelemetryData *telemetryArray, int arraySize, FILE *outputFile) {
+//    if (fprintf(
+//        outputFile,
+//        "Timestamp, sensorID, SensorType, Location, Measurement, Status\n") <
+//        0) {
+//        // Handle output error using perror()
+//        perror("Error writing output to file");
+//        fclose(outputFile); // Close the output file before exiting
+//        return 1;           // Exit with an error code
+//    }
+//    else {
+//        for (int i = 0; i < arraySize; ++i) {
+//            fprintf(outputFile, "%s,%s,%s,%s,%.2f,%s\n",
+//                telemetryArray[i].timestamp,
+//                telemetryArray[i].sensorID, telemetryArray[i].sensorType,
+//                telemetryArray[i].location, telemetryArray[i].measurement,
+//                telemetryArray[i].status);
+//        }
+//    }
+//    return 0;
+//}
 
 //void exportBySensorType(TelemetryData* telemetryArray, int arraySize, FILE* outputFile); {
 //    char sensorType[20];
