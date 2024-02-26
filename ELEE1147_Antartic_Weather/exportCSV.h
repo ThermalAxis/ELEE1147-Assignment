@@ -10,4 +10,6 @@
 
 void exportCSV(TelemetryData *telemetryArray, int arraySize);
 
+void exportBySensorType(TelemetryData* telemetryArray, int arraySize, FILE *outputFile);
+
 #endif
