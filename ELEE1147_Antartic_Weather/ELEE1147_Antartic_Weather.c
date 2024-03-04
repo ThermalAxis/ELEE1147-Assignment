@@ -2,6 +2,7 @@
 #include "json_parser.h"
 #include "statistics_functions.h"
 #include "telemetry_functions.h"
+#include "weather_conditions.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,11 +25,12 @@ int main() {
     printf("3. Filter by Location\n");
     printf("4. Filter by Sensor Type\n");
     printf("5. Filter by Sensor ID\n");
-    printf("6. Statistics Functions\n");
-    printf("7. Export to CSV\n");
-    printf("8. Exit\n");
+    printf("6. Filter by Time\n");
+    printf("7. Statistics Functions\n");
+    printf("8. Export to CSV\n");
+    printf("9. Exit\n");
 
-    printf("\nEnter your choice (1-8): ");
+    printf("\nEnter your choice (1-9): ");
 
 #if (_MSC_VER > 1600)
 
@@ -70,14 +72,17 @@ int main() {
       filterBySensorID(telemetryArray, arraySize);
       break;
     case 6:
+        filterByTimeStamp(telemetryArray, arraySize);
+        break;
+    case 7:
       statisticsFunctions(telemetryArray, arraySize);
       system("timeout /T 3 >nul");
       break;
-    case 7:
+    case 8:
       exportCSV(telemetryArray, arraySize);
       system("timeout /T 3 >nul");
       break;
-    case 8:
+    case 9:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");
       // Don't forget to free allocated memory if needed
       free(telemetryArray);

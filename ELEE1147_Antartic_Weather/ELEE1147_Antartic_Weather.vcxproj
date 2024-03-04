@@ -133,7 +133,7 @@
     <ClCompile Include="json_parser.c" />
     <ClCompile Include="statistics_functions.c" />
     <ClCompile Include="telemetry_functions.c" />
-    <ClCompile Include="weatherConditions.c" />
+    <ClCompile Include="weather_conditions.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cJSON.h" />
@@ -142,7 +142,7 @@
     <ClInclude Include="statistics_functions.h" />
     <ClInclude Include="telemetry_functions.h" />
     <ClInclude Include="telemetry_struct.h" />
-    <ClInclude Include="weatherConditions.h" />
+    <ClInclude Include="weather_conditions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="checkFormatting.sh" />

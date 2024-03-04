@@ -91,3 +91,52 @@ void filterByLocation(TelemetryData *telemetryArray, int arraySize) {
     }
   }
 }
+
+void filterByTimeStamp(TelemetryData* telemetryArray, int arraySize)
+{
+    struct timestamp {
+        int year;
+        int month;
+        int day;
+        int hour;
+        int minute;
+        int second;
+    };
+
+    struct timestamp startTimeStamp;
+    struct timestamp endTimeStamp;
+
+    char startTime[20];
+    char endTime[20];
+    printf("Enter the start timestamp to filter in the format 'YYYY-MM-DDTHH:MM:SS'\n");
+    printf("Start time: ");
+    scanf_s("%s", startTime, sizeof(startTime));
+
+    printf("\nEnter the end timestamp to filter in the format 'YYYY-MM-DDTHH:MM:SS'\n");
+    printf("End time: ");
+    scanf_s("%s", endTime, sizeof(endTime));
+
+    sscanf_s(startTime, "%4d-%2d-%2dT%2d:%2d:%2d", &startTimeStamp.year, &startTimeStamp.month, &startTimeStamp.day, &startTimeStamp.hour, &startTimeStamp.minute, &startTimeStamp.second);
+    sscanf_s(endTime, "%4d-%2d-%2dT%2d:%2d:%2d", &endTimeStamp.year, &endTimeStamp.month, &endTimeStamp.day, &endTimeStamp.hour, &endTimeStamp.minute, &endTimeStamp.second);
+    
+    printf("Inut Start Time: %s\n", startTime);
+    //printf("End: %s\n", endTime);
+
+    printf("Start timestamp:\n");
+    printf("Year: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond: %d\n", startTimeStamp.year, startTimeStamp.month, startTimeStamp.day, startTimeStamp.hour, startTimeStamp.minute, &startTimeStamp.second);
+
+    //printf("Telemetry Data for Time range '%s':\n", locationName);
+    //for (int i = 0; i < arraySize; ++i) {
+    //    if (strcmp(telemetryArray[i].location, locationName) == 0) {
+    //        printf("Timestamp: %s, SensorID: %s, SensorType: %s, Location: %s, "
+    //            "Measurement: %.2f, "
+    //            "Status: %s\n",
+    //            telemetryArray[i].timestamp, telemetryArray[i].sensorID,
+    //            telemetryArray[i].sensorType, telemetryArray[i].location,
+    //            telemetryArray[i].measurement, telemetryArray[i].status);
+    //    }
+    //}
+
+    system("pause");
+    return;
+}

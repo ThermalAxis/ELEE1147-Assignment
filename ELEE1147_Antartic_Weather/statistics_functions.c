@@ -21,7 +21,7 @@ int statisticsFunctions(TelemetryData* telemetryArray, int arraySize)
 		printf("Invalid selection, returning to main menu.");
 		return;
 	case 1:
-		printf("all data");
+		allStats(telemetryArray, arraySize);
 		return 0;
 	case 2:
 		printf("location");
@@ -33,4 +33,57 @@ int statisticsFunctions(TelemetryData* telemetryArray, int arraySize)
 		printf("sensor ID");
 		return 0;
 	}
+}
+
+allStats(TelemetryData* telemetryArray, int arraySize)
+{
+	double windspeedTotal = 0, pressureTotal = 0, temperatureTotal = 0, visibilityTotal = 0, UVradiationTotal = 0;
+	int windspeedNum = 0, pressureNum = 0, temperatureNum = 0, visibilityNum = 0, UVradiationNum = 0;
+
+	for (int i = 0; i < arraySize; ++i) {
+		if (strcmp(telemetryArray[i].sensorType, "WindSpeed") == 0) {
+			windspeedTotal =+ telemetryArray[i].measurement;
+			windspeedNum++;
+		}
+		else if(strcmp(telemetryArray[i].sensorType, "Pressure") == 0) {
+			pressureTotal =+ telemetryArray[i].measurement;
+			pressureNum++;
+		}
+		else if (strcmp(telemetryArray[i].sensorType, "Temperature") == 0) {
+			temperatureTotal =+ telemetryArray[i].measurement;
+			temperatureNum++;
+		}
+		else if (strcmp(telemetryArray[i].sensorType, "Visibility") == 0) {
+			visibilityTotal =+ telemetryArray[i].measurement;
+			visibilityNum++;
+		}
+		else if (strcmp(telemetryArray[i].sensorType, "UVRadiation") == 0) {
+			UVradiationTotal =+ telemetryArray[i].measurement;
+			UVradiationNum++;
+		}
+	}
+
+	prinf("Totals:\n");
+	printf("Windspeed: %d, Pressure: %d, Temperature: %d, Visibility: %d, UVRadiation: %d", windspeedTotal, pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal);
+
+}
+
+
+
+
+
+
+locationStats()
+{
+
+}
+
+sensorTypeStats()
+{
+
+}
+
+sensorIDStats()
+{
+
 }
