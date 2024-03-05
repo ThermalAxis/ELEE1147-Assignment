@@ -6,7 +6,7 @@
 int statisticsFunctions(TelemetryData* telemetryArray, int arraySize)
 {
 	int statisticsChoice;
-	system("cls"); // clear the terminal
+	system("cls");
 	printf("==== Statistics for telemetry data ====\n");
 	printf("1 - Statistics of all data\n");
 	printf("2 - Statistics by Location\n");
@@ -39,49 +39,38 @@ int statisticsFunctions(TelemetryData* telemetryArray, int arraySize)
 
 allStats(TelemetryData* telemetryArray, int arraySize)
 {
-	double windspeedTotal, pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal;
-	int windspeedCount, pressureCount, temperatureCount, visibilityCount, UVradiationCount;
-	char sensorTypes[5][20] = {
-		{"WindSpeed"},
-		{"Pressure"},
-		{"Temperature"},
-		{"Visibility"},
-		{"UVRadiation"},
-	};
+	double windspeedTotal = sumSensorType(telemetryArray, arraySize, "WindSpeed");
+	int windspeedCount = countSensorType(telemetryArray, arraySize, "WindSpeed");
+	double windspeedMean = windspeedTotal / windspeedCount;
+	double windspeedSTDev = stdevSensorType(telemetryArray, arraySize, "WindSpeed");
 
-	for (int i = 0; i < 5; i++) {
-		sumSensorType(telemetryArray, arraySize, sensorTypes[i]);
-	}
-	
-	windspeedTotal = sumSensorType(telemetryArray, arraySize, "WindSpeed");
-	windspeedCount = countSensorType(telemetryArray, arraySize, "WindSpeed");
+	double pressureTotal = sumSensorType(telemetryArray, arraySize, "Pressure");
+	int pressureCount = countSensorType(telemetryArray, arraySize, "Pressure");
+	double pressureMean = pressureTotal / pressureCount;
+	double pressureSTDev = stdevSensorType(telemetryArray, arraySize, "Pressure");
 
-	pressureTotal = sumSensorType(telemetryArray, arraySize, "Pressure");
-	pressureCount = countSensorType(telemetryArray, arraySize, "Pressure");
+	double temperatureTotal = sumSensorType(telemetryArray, arraySize, "Temperature");
+	int temperatureCount = countSensorType(telemetryArray, arraySize, "Temperature");
+	double temperatureMean = temperatureTotal / temperatureCount;
+	double temperatureSTDev = stdevSensorType(telemetryArray, arraySize, "Temperature");
 
-	temperatureTotal = sumSensorType(telemetryArray, arraySize, "Temperature");
-	temperatureCount = countSensorType(telemetryArray, arraySize, "Temperature");
+	double visibilityTotal = sumSensorType(telemetryArray, arraySize, "Visibility");
+	int visibilityCount = countSensorType(telemetryArray, arraySize, "Visibility");
+	double visibilityMean = visibilityTotal / visibilityCount;
+	double visibilitySTDev = stdevSensorType(telemetryArray, arraySize, "Visibility");
 
-	visibilityTotal = sumSensorType(telemetryArray, arraySize, "Visibility");
-	visibilityCount = countSensorType(telemetryArray, arraySize, "Visibility");
+	double UVradiationTotal = sumSensorType(telemetryArray, arraySize, "UVRadiation");
+	int UVradiationCount = countSensorType(telemetryArray, arraySize, "UVRadiation");
+	double UVradiationMean = UVradiationTotal / UVradiationCount;
+	double UVradiationSTDev = stdevSensorType(telemetryArray, arraySize, "UVRadiation");
 
-	UVradiationTotal = sumSensorType(telemetryArray, arraySize, "UVRadiation");
-	UVradiationCount = countSensorType(telemetryArray, arraySize, "UVRadiation");
-
-	printf("Totals:\n");
-	printf("Windspeed:%.2fkm/h, Pressure:%.2fhPa, Temperature:%.2fC, Visibility:%.2fm, UV Index:%.2f\n\n",
-		windspeedTotal, pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal);
-
-	printf("Averages:\n");
-	printf("Windspeed:%.2fkm/h, Pressure:%.2fhPa, Temperature:%.2fC, Visibility:%.2fm, UV Index:%.2f\n\n",
-		windspeedTotal / windspeedCount, pressureTotal / pressureCount, temperatureTotal / temperatureCount, visibilityTotal / visibilityCount, UVradiationTotal / UVradiationCount);
-
-	printf("Standard Deviation:\n");
-
+	printf("\n\tWindspeed (km/h) Pressure (hPa)\tTemperature (C)\tVisibility (m)\tUV Index\n");
+	printf("Total:\t%.1f\t\t %.1f\t%.1f\t%.1f\t%.1f\n", windspeedTotal, pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal);
+	printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedMean, pressureMean, temperatureMean, visibilityMean, UVradiationMean);
+	printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedSTDev, pressureSTDev, temperatureSTDev, visibilitySTDev, UVradiationSTDev);
 }
 
-
-double sumSensorType(TelemetryData *telemetryArray, int arraySize, char *sensorType) {
+double sumSensorType(TelemetryData* telemetryArray, int arraySize, char* sensorType) {
 	double total = 0;
 	for (int i = 0; i < arraySize; ++i) {
 		if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
@@ -101,25 +90,24 @@ int countSensorType(TelemetryData* telemetryArray, int arraySize, char* sensorTy
 	return count;
 }
 
-double stDeviation(TelemetryData* telemetryArray, double sum, double mean, double count) {
-	double stdev;
-	for (int i = 0; i < count; i++) {
+double stdevSensorType(TelemetryData* telemetryArray, int arraySize, char *sensorType) {
+	double stdev = 0, average = 0, sum = 0;
+	int count = 0;
+
+	for (int i = 0; i < arraySize; i++) {
+		if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+			sum += telemetryArray[i].measurement;
+			count++;
+		}
 	}
+	average = sum / count;
+	for (int i = 0; i < arraySize; i++) {
+		if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+			stdev += pow(telemetryArray[i].measurement - average, 2);
+		}
+	}
+	return sqrt(stdev/count);
 }
-
-	/*float calculateSD(float data[]) {
-		float sum = 0.0, mean, SD = 0.0;
-		int i;
-		for (i = 0; i < 10; ++i) {
-			sum += data[i];
-		}
-		mean = sum / 10;
-		for (i = 0; i < 10; ++i) {
-			SD += pow(data[i] - mean, 2);
-		}
-		return sqrt(SD / 10);
-	}*/
-
 
 locationStats()
 {

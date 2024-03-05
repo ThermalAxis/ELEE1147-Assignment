@@ -8,5 +8,6 @@ int statisticsFunctions(TelemetryData* telemetryArray, int arraySize);
 
 double sumSensorType(TelemetryData* telemetryArray, int arraySize, char *sensorType);
 int countSensorType(TelemetryData* telemetryArray, int arraySize, char* sensorType);
+double stdevSensorType(TelemetryData* telemetryArray, int arraySize, char* sensorType);
 
 #endif
