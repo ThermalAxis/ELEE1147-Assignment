@@ -8,8 +8,5 @@ void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
   printf("Weather Conditions\n\n");
 
   for (int i = 0; i < arraySize; ++i) {
-
-
-
   }
 }
