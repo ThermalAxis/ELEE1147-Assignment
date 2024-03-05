@@ -36,7 +36,7 @@
     <ClCompile Include="exportCSV.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="weatherConditions.c">
+    <ClCompile Include="weather_conditions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,7 +59,7 @@
     <ClInclude Include="exportCSV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="weatherConditions.h">
+    <ClInclude Include="weather_conditions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
