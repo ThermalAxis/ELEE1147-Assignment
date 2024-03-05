@@ -76,7 +76,6 @@ int main() {
       break;
     case 7:
       statisticsFunctions(telemetryArray, arraySize);
-      system("timeout /T 3 >nul");
       break;
     case 8:
       exportCSV(telemetryArray, arraySize);

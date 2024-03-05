@@ -10,4 +10,9 @@ double sumSensorType(TelemetryData* telemetryArray, int arraySize, char *sensorT
 int countSensorType(TelemetryData* telemetryArray, int arraySize, char* sensorType);
 double stdevSensorType(TelemetryData* telemetryArray, int arraySize, char* sensorType);
 
+double sumLocationName(TelemetryData* telemetryArray, int arraySize, char* sensorType, char* locationName);
+int countLocationName(TelemetryData* telemetryArray, int arraySize, char* sensorType, char* locationName);
+double stdevLocationName(TelemetryData* telemetryArray, int arraySize, char* sensorType, char* locationName);
+
+
 #endif
