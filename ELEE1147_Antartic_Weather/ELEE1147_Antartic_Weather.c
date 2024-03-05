@@ -72,8 +72,8 @@ int main() {
       filterBySensorID(telemetryArray, arraySize);
       break;
     case 6:
-        filterByTimeStamp(telemetryArray, arraySize);
-        break;
+      filterByTimeStamp(telemetryArray, arraySize);
+      break;
     case 7:
       statisticsFunctions(telemetryArray, arraySize);
       system("timeout /T 3 >nul");

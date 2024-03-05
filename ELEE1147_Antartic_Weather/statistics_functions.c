@@ -1,6 +1,7 @@
 #include "statistics_functions.h"
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 int statisticsFunctions(TelemetryData* telemetryArray, int arraySize)
 {
@@ -22,6 +23,7 @@ int statisticsFunctions(TelemetryData* telemetryArray, int arraySize)
 		return;
 	case 1:
 		allStats(telemetryArray, arraySize);
+		system("timeout /T 30");
 		return 0;
 	case 2:
 		printf("location");
@@ -37,40 +39,86 @@ int statisticsFunctions(TelemetryData* telemetryArray, int arraySize)
 
 allStats(TelemetryData* telemetryArray, int arraySize)
 {
-	double windspeedTotal = 0, pressureTotal = 0, temperatureTotal = 0, visibilityTotal = 0, UVradiationTotal = 0;
-	int windspeedNum = 0, pressureNum = 0, temperatureNum = 0, visibilityNum = 0, UVradiationNum = 0;
+	double windspeedTotal, pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal;
+	int windspeedCount, pressureCount, temperatureCount, visibilityCount, UVradiationCount;
+	char sensorTypes[5][20] = {
+		{"WindSpeed"},
+		{"Pressure"},
+		{"Temperature"},
+		{"Visibility"},
+		{"UVRadiation"},
+	};
 
-	for (int i = 0; i < arraySize; ++i) {
-		if (strcmp(telemetryArray[i].sensorType, "WindSpeed") == 0) {
-			windspeedTotal =+ telemetryArray[i].measurement;
-			windspeedNum++;
-		}
-		else if(strcmp(telemetryArray[i].sensorType, "Pressure") == 0) {
-			pressureTotal =+ telemetryArray[i].measurement;
-			pressureNum++;
-		}
-		else if (strcmp(telemetryArray[i].sensorType, "Temperature") == 0) {
-			temperatureTotal =+ telemetryArray[i].measurement;
-			temperatureNum++;
-		}
-		else if (strcmp(telemetryArray[i].sensorType, "Visibility") == 0) {
-			visibilityTotal =+ telemetryArray[i].measurement;
-			visibilityNum++;
-		}
-		else if (strcmp(telemetryArray[i].sensorType, "UVRadiation") == 0) {
-			UVradiationTotal =+ telemetryArray[i].measurement;
-			UVradiationNum++;
-		}
+	for (int i = 0; i < 5; i++) {
+		sumSensorType(telemetryArray, arraySize, sensorTypes[i]);
 	}
+	
+	windspeedTotal = sumSensorType(telemetryArray, arraySize, "WindSpeed");
+	windspeedCount = countSensorType(telemetryArray, arraySize, "WindSpeed");
 
-	prinf("Totals:\n");
-	printf("Windspeed: %d, Pressure: %d, Temperature: %d, Visibility: %d, UVRadiation: %d", windspeedTotal, pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal);
+	pressureTotal = sumSensorType(telemetryArray, arraySize, "Pressure");
+	pressureCount = countSensorType(telemetryArray, arraySize, "Pressure");
+
+	temperatureTotal = sumSensorType(telemetryArray, arraySize, "Temperature");
+	temperatureCount = countSensorType(telemetryArray, arraySize, "Temperature");
+
+	visibilityTotal = sumSensorType(telemetryArray, arraySize, "Visibility");
+	visibilityCount = countSensorType(telemetryArray, arraySize, "Visibility");
+
+	UVradiationTotal = sumSensorType(telemetryArray, arraySize, "UVRadiation");
+	UVradiationCount = countSensorType(telemetryArray, arraySize, "UVRadiation");
+
+	printf("Totals:\n");
+	printf("Windspeed:%.2fkm/h, Pressure:%.2fhPa, Temperature:%.2fC, Visibility:%.2fm, UV Index:%.2f\n\n",
+		windspeedTotal, pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal);
+
+	printf("Averages:\n");
+	printf("Windspeed:%.2fkm/h, Pressure:%.2fhPa, Temperature:%.2fC, Visibility:%.2fm, UV Index:%.2f\n\n",
+		windspeedTotal / windspeedCount, pressureTotal / pressureCount, temperatureTotal / temperatureCount, visibilityTotal / visibilityCount, UVradiationTotal / UVradiationCount);
+
+	printf("Standard Deviation:\n");
 
 }
 
 
+double sumSensorType(TelemetryData *telemetryArray, int arraySize, char *sensorType) {
+	double total = 0;
+	for (int i = 0; i < arraySize; ++i) {
+		if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+			total += telemetryArray[i].measurement;
+		}
+	}
+	return total;
+}
 
+int countSensorType(TelemetryData* telemetryArray, int arraySize, char* sensorType) {
+	int count = 0;
+	for (int i = 0; i < arraySize; ++i) {
+		if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+			count++;
+		}
+	}
+	return count;
+}
 
+double stDeviation(TelemetryData* telemetryArray, double sum, double mean, double count) {
+	double stdev;
+	for (int i = 0; i < count; i++) {
+	}
+}
+
+	/*float calculateSD(float data[]) {
+		float sum = 0.0, mean, SD = 0.0;
+		int i;
+		for (i = 0; i < 10; ++i) {
+			sum += data[i];
+		}
+		mean = sum / 10;
+		for (i = 0; i < 10; ++i) {
+			SD += pow(data[i] - mean, 2);
+		}
+		return sqrt(SD / 10);
+	}*/
 
 
 locationStats()
