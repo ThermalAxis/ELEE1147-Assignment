@@ -1,10 +1,12 @@
 #include "statistics_functions.h"
+#include "telemetry_functions.h"
 #include "weather_conditions.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 
 void weatherConditions(TelemetryData* telemetryArray, int arraySize) {
+
     int weatherChoice;
     system("cls");
     printf("==== Weather conditions for telemetry data ====\n");
@@ -41,40 +43,40 @@ void allCond(TelemetryData* telemetryArray, int arraySize) {
                              {"McMurdo Station"},
                              {"Palmer Station"} };
 
-    char *testTimestamp = "2024-01-01T00:00:01";
-    struct tm convertedTime = convertTimestamp(testTimestamp);
+    time_t startTimeEpoch = convertTimestamp(telemetryArray[0].timestamp);
+    time_t endTimeEpoch = 0;
+
+    // find earliest timestamp
+    for (int i = 0; i < arraySize; i++) {
+        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
+
+        if (difftime(currentEpoch, startTimeEpoch) < 0) {
+            startTimeEpoch = currentEpoch;
+        }
+    }
+
+    // find latest timestamp
+    for (int i = 0; i < arraySize; i++) {
+        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
+
+        if (difftime(currentEpoch, endTimeEpoch) > 0) {
+            endTimeEpoch = currentEpoch;
+        }
+    }
 
     printf(
-        "Year: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond: %d\n",
-        convertedTime.tm_year += 1900,
-        convertedTime.tm_mon += 1, convertedTime.tm_mday, convertedTime.tm_hour,
-        convertedTime.tm_min, convertedTime.tm_sec);
+        "\nStart epoch: %ld\n",
+        startTimeEpoch);
+    printf(
+        "End epoch: %ld\n\n",
+        endTimeEpoch);
 
-    system("pause");
+    system("pause"); // pause execution
 
   for (int i = 0; i < 5; i++) {
     getLocationCond(telemetryArray, arraySize, locations[i]);
   }
   return;
-}
-
-struct tm convertTimestamp(char* timestamp) {
-    struct tm datetime;
-    printf("timestamp is %s\n", timestamp);
-    sscanf_s(timestamp, "%d-%d-%dT%d:%d:%d", &datetime.tm_year,
-        &datetime.tm_mon, &datetime.tm_mday, &datetime.tm_hour,
-        &datetime.tm_min, &datetime.tm_sec);
-
-    //printf(
-    //    "Year: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond: %d\n",
-    //    datetime.tm_year,
-    //    datetime.tm_mon, datetime.tm_mday, datetime.tm_hour,
-    //    datetime.tm_min, datetime.tm_sec);
-
-    datetime.tm_year -= 1900;
-    datetime.tm_mon -= 1;
-
-    return datetime;
 }
 
 void locationCond(TelemetryData *telemetryArray, int arraySize) {

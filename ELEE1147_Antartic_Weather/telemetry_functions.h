@@ -56,4 +56,6 @@ void filterByLocation(TelemetryData *telemetryArray, int arraySize);
  */
 void filterBySensorID(TelemetryData *telemetryArray, int arraySize);
 
+time_t convertTimestamp(char* timestamp);
+
 #endif // TELEMETRY_FUNCTIONS_H

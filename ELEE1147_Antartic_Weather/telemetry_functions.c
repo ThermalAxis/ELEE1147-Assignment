@@ -1,6 +1,7 @@
 #include "telemetry_functions.h"
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
 #pragma region // DO NOT TOUCH
 void displayAllData(TelemetryData *telemetryArray, int arraySize) {
@@ -144,4 +145,25 @@ void filterByTimeStamp(TelemetryData *telemetryArray, int arraySize) {
 
   system("pause");
   return;
+}
+
+time_t convertTimestamp(char* timestamp) {
+    struct tm datetime;
+    //printf("timestamp is %s\n", timestamp);
+    sscanf_s(timestamp, "%d-%d-%dT%d:%d:%d", &datetime.tm_year,
+        &datetime.tm_mon, &datetime.tm_mday, &datetime.tm_hour,
+        &datetime.tm_min, &datetime.tm_sec);
+
+    datetime.tm_year -= 1900;
+    datetime.tm_mon -= 1;
+
+    time_t epoch = mktime(&datetime);
+    
+    //printf(
+    //    "Epoch: %d\nYear: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond: %d\n",
+    //    epoch, datetime.tm_year += 1900,
+    //    datetime.tm_mon += 1, datetime.tm_mday, datetime.tm_hour,
+    //    datetime.tm_min, datetime.tm_sec);
+
+    return epoch;
 }

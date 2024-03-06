@@ -16,6 +16,4 @@ char *getWeatherConditions(double sensorPressure, double sensorTemperature,
                            double sensorWindSpeed, double sensorVisibility,
                            double sensorUVRadiation);
 
-struct tm convertTimestamp(char* timestamp);
-
 #endif
