@@ -1,5 +1,5 @@
-#include "weather_conditions.h"
 #include "statistics_functions.h"
+#include "weather_conditions.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -76,10 +76,6 @@ void getLocationCond(TelemetryData *telemetryArray, int arraySize,
       meanLocationName(telemetryArray, arraySize, "Visibility", locationName);
   double UVradiationMean =
       meanLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
-
-  // printf("pressure:%.1f, temp:%.1f, wind:%.1f, vis:%.1f, UV:%1.f\n",
-  // pressureMean, temperatureMean, windspeedMean, visibilityMean,
-  // UVradiationMean);
 
   strcpy(weatherConditions,
          getWeatherConditions(pressureMean, temperatureMean, windspeedMean,
