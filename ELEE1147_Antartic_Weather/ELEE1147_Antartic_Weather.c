@@ -87,7 +87,7 @@ int main() {
       free(telemetryArray);
       return 0;
     default:
-      printf("Invalid choice. Please enter a number between 1 and 8.\n");
+      printf("Invalid choice. Please enter a number between 1 and 9.\n");
     }
   }
   return 0;

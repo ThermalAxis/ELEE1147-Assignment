@@ -10,6 +10,7 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
   printf("1 - Statistics of all data\n");
   printf("2 - Statistics by Location\n");
   printf("3 - Statistics by Sensor ID\n");
+  printf("4 - Main menu\n");
 
   printf("\nEnter your choice (1-4): ");
 
@@ -30,6 +31,8 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
   case 3:
     sensorIDStats(telemetryArray, arraySize);
     system("timeout /T 30");
+    return 0;
+  case 4:
     return 0;
   }
 }
