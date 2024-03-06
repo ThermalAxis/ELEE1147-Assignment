@@ -136,7 +136,8 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
       sumLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
   int windspeedCount =
       countLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
-  double windspeedMean = meanLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
+  double windspeedMean =
+      meanLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
   double windspeedSTDev =
       stdevLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
 
@@ -144,7 +145,8 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
       sumLocationName(telemetryArray, arraySize, "Pressure", locationName);
   int pressureCount =
       countLocationName(telemetryArray, arraySize, "Pressure", locationName);
-  double pressureMean = meanLocationName(telemetryArray, arraySize, "Pressure", locationName);
+  double pressureMean =
+      meanLocationName(telemetryArray, arraySize, "Pressure", locationName);
   double pressureSTDev =
       stdevLocationName(telemetryArray, arraySize, "Pressure", locationName);
 
@@ -152,7 +154,8 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
       sumLocationName(telemetryArray, arraySize, "Temperature", locationName);
   int temperatureCount =
       countLocationName(telemetryArray, arraySize, "Temperature", locationName);
-  double temperatureMean = meanLocationName(telemetryArray, arraySize, "Temperature", locationName);
+  double temperatureMean =
+      meanLocationName(telemetryArray, arraySize, "Temperature", locationName);
   double temperatureSTDev =
       stdevLocationName(telemetryArray, arraySize, "Temperature", locationName);
 
@@ -160,7 +163,8 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
       sumLocationName(telemetryArray, arraySize, "Visibility", locationName);
   int visibilityCount =
       countLocationName(telemetryArray, arraySize, "Visibility", locationName);
-  double visibilityMean = meanLocationName(telemetryArray, arraySize, "Visibility", locationName);
+  double visibilityMean =
+      meanLocationName(telemetryArray, arraySize, "Visibility", locationName);
   double visibilitySTDev =
       stdevLocationName(telemetryArray, arraySize, "Visibility", locationName);
 
@@ -168,7 +172,8 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
       sumLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
   int UVradiationCount =
       countLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
-  double UVradiationMean = meanLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
+  double UVradiationMean =
+      meanLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
   double UVradiationSTDev =
       stdevLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
 
@@ -184,9 +189,12 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
          pressureSTDev, temperatureSTDev, visibilitySTDev, UVradiationSTDev);
 }
 
-double meanLocationName(TelemetryData* telemetryArray, int arraySize, char* sensorType, char* locationName) {
-    double mean = sumLocationName(telemetryArray, arraySize, sensorType, locationName) / countLocationName(telemetryArray, arraySize, sensorType, locationName);
-    return mean;
+double meanLocationName(TelemetryData *telemetryArray, int arraySize,
+                        char *sensorType, char *locationName) {
+  double mean =
+      sumLocationName(telemetryArray, arraySize, sensorType, locationName) /
+      countLocationName(telemetryArray, arraySize, sensorType, locationName);
+  return mean;
 }
 
 double sumLocationName(TelemetryData *telemetryArray, int arraySize,
