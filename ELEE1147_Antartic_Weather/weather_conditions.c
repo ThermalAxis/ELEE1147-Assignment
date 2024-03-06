@@ -2,52 +2,79 @@
 #include "weather_conditions.h"
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 
-void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
-  int weatherChoice;
-  system("cls");
-  printf("==== Weather conditions for telemetry data ====\n");
-  printf("1 - Weather conditions of all data\n");
-  printf("2 - Weather conditions by Location\n");
-  printf("3 - Weather conditions by time\n");
-  printf("4 - Main menu\n");
+void weatherConditions(TelemetryData* telemetryArray, int arraySize) {
+    int weatherChoice;
+    system("cls");
+    printf("==== Weather conditions for telemetry data ====\n");
+    printf("1 - Weather conditions of all data\n");
+    printf("2 - Weather conditions by Location\n");
+    printf("3 - Main menu\n");
 
-  printf("\nEnter your choice (1-4): ");
+    printf("\nEnter your choice (1-3): ");
 
-  scanf_s("%d", &weatherChoice);
+    scanf_s("%d", &weatherChoice);
 
-  switch (weatherChoice) {
-  default:
-    printf("Invalid selection, returning to main menu.");
-    system("timeout /T 3>nul");
-    return 0;
-  case 1:
-    allCond(telemetryArray, arraySize);
-    system("timeout /T 30");
-    return 0;
-  case 2:
-    locationCond(telemetryArray, arraySize);
-    system("timeout /T 30");
-    return 0;
-  case 3:
-    // timeCond(telemetryArray, arraySize);
-    return 0;
-  case 4:
-    return 0;
-  }
+    switch (weatherChoice) {
+    default:
+        printf("Invalid selection, returning to main menu.");
+        system("timeout /T 3>nul");
+        return 0;
+    case 1:
+        allCond(telemetryArray, arraySize);
+        system("timeout /T 30");
+        return 0;
+    case 2:
+        locationCond(telemetryArray, arraySize);
+        system("timeout /T 30");
+        return 0;
+    case 3:
+        return 0;
+    }
 }
 
-void allCond(TelemetryData *telemetryArray, int arraySize) {
-  char locations[5][34] = {{"Casey Station"},
-                           {"Amundsen-Scott South Pole Station"},
-                           {"Rothera Research Station"},
-                           {"McMurdo Station"},
-                           {"Palmer Station"}};
+void allCond(TelemetryData* telemetryArray, int arraySize) {
+    char locations[5][34] = { {"Casey Station"},
+                             {"Amundsen-Scott South Pole Station"},
+                             {"Rothera Research Station"},
+                             {"McMurdo Station"},
+                             {"Palmer Station"} };
 
-  for (int i = 0; i < 4; i++) {
+    char *testTimestamp = "2024-01-01T00:00:01";
+    struct tm convertedTime = convertTimestamp(testTimestamp);
+
+    printf(
+        "Year: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond: %d\n",
+        convertedTime.tm_year += 1900,
+        convertedTime.tm_mon += 1, convertedTime.tm_mday, convertedTime.tm_hour,
+        convertedTime.tm_min, convertedTime.tm_sec);
+
+    system("pause");
+
+  for (int i = 0; i < 5; i++) {
     getLocationCond(telemetryArray, arraySize, locations[i]);
   }
   return;
+}
+
+struct tm convertTimestamp(char* timestamp) {
+    struct tm datetime;
+    printf("timestamp is %s\n", timestamp);
+    sscanf_s(timestamp, "%d-%d-%dT%d:%d:%d", &datetime.tm_year,
+        &datetime.tm_mon, &datetime.tm_mday, &datetime.tm_hour,
+        &datetime.tm_min, &datetime.tm_sec);
+
+    //printf(
+    //    "Year: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond: %d\n",
+    //    datetime.tm_year,
+    //    datetime.tm_mon, datetime.tm_mday, datetime.tm_hour,
+    //    datetime.tm_min, datetime.tm_sec);
+
+    datetime.tm_year -= 1900;
+    datetime.tm_mon -= 1;
+
+    return datetime;
 }
 
 void locationCond(TelemetryData *telemetryArray, int arraySize) {
