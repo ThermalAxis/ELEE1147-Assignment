@@ -1,77 +1,82 @@
+#include "weather_conditions.h"
 #include "statistics_functions.h"
 #include "telemetry_functions.h"
-#include "weather_conditions.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
 
-void weatherConditions(TelemetryData* telemetryArray, int arraySize) {
+void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
 
-    int weatherChoice;
-    system("cls");
-    printf("==== Weather conditions for telemetry data ====\n");
-    printf("1 - Weather conditions of all data\n");
-    printf("2 - Weather conditions by Location\n");
-    printf("3 - Main menu\n");
+  int weatherChoice;
+  system("cls");
+  printf("==== Weather conditions for telemetry data ====\n");
+  printf("1 - Weather conditions of all data\n");
+  printf("2 - Weather conditions by Location\n");
+  printf("3 - Main menu\n");
 
-    printf("\nEnter your choice (1-3): ");
+  printf("\nEnter your choice (1-3): ");
 
-    scanf_s("%d", &weatherChoice);
+  scanf_s("%d", &weatherChoice);
 
-    switch (weatherChoice) {
-    default:
-        printf("Invalid selection, returning to main menu.");
-        system("timeout /T 3>nul");
-        return 0;
-    case 1:
-        allCond(telemetryArray, arraySize);
-        system("timeout /T 30");
-        return 0;
-    case 2:
-        locationCond(telemetryArray, arraySize);
-        system("timeout /T 30");
-        return 0;
-    case 3:
-        return 0;
-    }
+  switch (weatherChoice) {
+  default:
+    printf("Invalid selection, returning to main menu.");
+    system("timeout /T 3>nul");
+    return 0;
+  case 1:
+    allCond(telemetryArray, arraySize);
+    system("timeout /T 30");
+    return 0;
+  case 2:
+    locationCond(telemetryArray, arraySize);
+    system("timeout /T 30");
+    return 0;
+  case 3:
+    return 0;
+  }
 }
 
-void allCond(TelemetryData* telemetryArray, int arraySize) {
-    char locations[5][34] = { {"Casey Station"},
-                             {"Amundsen-Scott South Pole Station"},
-                             {"Rothera Research Station"},
-                             {"McMurdo Station"},
-                             {"Palmer Station"} };
+void allCond(TelemetryData *telemetryArray, int arraySize) {
+  char locations[5][34] = {{"Casey Station"},
+                           {"Amundsen-Scott South Pole Station"},
+                           {"Rothera Research Station"},
+                           {"McMurdo Station"},
+                           {"Palmer Station"}};
 
-    time_t startTimeEpoch = convertTimestamp(telemetryArray[0].timestamp);
-    time_t endTimeEpoch = 0;
+  time_t startTimeEpoch = convertTimestamp(telemetryArray[0].timestamp);
+  time_t endTimeEpoch = 0;
 
-    // find earliest timestamp
-    for (int i = 0; i < arraySize; i++) {
-        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
+  // find earliest timestamp
+  for (int i = 0; i < arraySize; i++) {
+    time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
 
-        if (difftime(currentEpoch, startTimeEpoch) < 0) {
-            startTimeEpoch = currentEpoch;
-        }
+    if (difftime(currentEpoch, startTimeEpoch) < 0) {
+      startTimeEpoch = currentEpoch;
     }
+  }
 
-    // find latest timestamp
-    for (int i = 0; i < arraySize; i++) {
-        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
+  // find latest timestamp
+  for (int i = 0; i < arraySize; i++) {
+    time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
 
-        if (difftime(currentEpoch, endTimeEpoch) > 0) {
-            endTimeEpoch = currentEpoch;
-        }
+    if (difftime(currentEpoch, endTimeEpoch) > 0) {
+      endTimeEpoch = currentEpoch;
     }
+  }
 
-    printf(
-        "\nStart epoch: %ld\n",
-        startTimeEpoch);
-    printf(
-        "End epoch: %ld\n\n",
-        endTimeEpoch);
+  printf("\nStart epoch: %ld\n", startTimeEpoch);
+  printf("End epoch: %ld\n\n", endTimeEpoch);
 
-    system("pause"); // pause execution
+  /*
+  calculate 6-hourly weather conditions in all data
+  convert epoch back to structure
+  0000-0559 , 0600-1159 , 1200-1759 , 1800-2359
+
+  each station per day
+
+  */
+
+  system("pause"); // pause execution
 
   for (int i = 0; i < 5; i++) {
     getLocationCond(telemetryArray, arraySize, locations[i]);
@@ -150,3 +155,7 @@ char *getWeatherConditions(double sensorPressure, double sensorTemperature,
   }
   return result;
 }
+
+/*
+Yes I know that my code is messy and unoptimised.
+*/

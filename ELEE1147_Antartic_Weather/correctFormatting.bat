@@ -27,4 +27,4 @@ start /wait /B .\clang-format.exe -style=file .\msvc.conf -i %%b
 
 cls
 echo Processed !i! of %j% files, press any key to exit.
-pause>nul
+pause
