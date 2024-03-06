@@ -38,17 +38,29 @@ void weatherConditions(TelemetryData* telemetryArray, int arraySize) {
 }
 
 void allCond(TelemetryData* telemetryArray, int arraySize) {
+    char locations[5][34] = {
+        {"Casey Station"},
+        {"Amundsen-Scott South Pole Station"},
+        {"Rothera Research Station"},
+        {"McMurdo Station"},
+        {"Palmer Station"}
+    };
 
+    for (int i = 0; i < 4; i++) {
+        getLocationCond(telemetryArray, arraySize, locations[i]);
+    }
+    return;
 }
 
-void locationCond(TelemetryData* telemetryArray, int arraySize) {
-    char locationName[34], weatherConditions[10];
+void getLocationCond(TelemetryData* telemetryArray, int arraySize, char* locationName) {
+    char weatherConditions[10];
+    //char locationName[34];
 
-    printf("Enter the Location to calculate weather conditions: ");
-    while (getchar() != '\n')
-        ;
-    scanf_s("%33[^\n]", locationName,
-        (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+    //printf("Enter the Location to calculate weather conditions: ");
+    //while (getchar() != '\n')
+    //    ;
+    //scanf_s("%33[^\n]", locationName,
+    //    (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
 
     double windspeedMean = meanLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
     double pressureMean = meanLocationName(telemetryArray, arraySize, "Pressure", locationName);
@@ -56,7 +68,7 @@ void locationCond(TelemetryData* telemetryArray, int arraySize) {
     double visibilityMean = meanLocationName(telemetryArray, arraySize, "Visibility", locationName);
     double UVradiationMean = meanLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
 
-    printf("pressure:%.1f, temp:%.1f, wind:%.1f, vis:%.1f, UV:%1.f\n", pressureMean, temperatureMean, windspeedMean, visibilityMean, UVradiationMean);
+    //printf("pressure:%.1f, temp:%.1f, wind:%.1f, vis:%.1f, UV:%1.f\n", pressureMean, temperatureMean, windspeedMean, visibilityMean, UVradiationMean);
 
     strcpy(weatherConditions, getWeatherConditions(pressureMean, temperatureMean, windspeedMean, visibilityMean, UVradiationMean));
     printf("Weather conditions at %s are %s\n", locationName, weatherConditions);
