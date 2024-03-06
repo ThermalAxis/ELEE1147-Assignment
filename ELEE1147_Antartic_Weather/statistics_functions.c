@@ -82,48 +82,6 @@ void allStats(TelemetryData *telemetryArray, int arraySize) {
          pressureSTDev, temperatureSTDev, visibilitySTDev, UVradiationSTDev);
 }
 
-double sumSensorType(TelemetryData *telemetryArray, int arraySize,
-                     char *sensorType) {
-  double total = 0;
-  for (int i = 0; i < arraySize; ++i) {
-    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
-      total += telemetryArray[i].measurement;
-    }
-  }
-  return total;
-}
-
-int countSensorType(TelemetryData *telemetryArray, int arraySize,
-                    char *sensorType) {
-  int count = 0;
-  for (int i = 0; i < arraySize; ++i) {
-    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
-      count++;
-    }
-  }
-  return count;
-}
-
-double stdevSensorType(TelemetryData *telemetryArray, int arraySize,
-                       char *sensorType) {
-  double stdev = 0, average = 0, sum = 0;
-  int count = 0;
-
-  for (int i = 0; i < arraySize; i++) {
-    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
-      sum += telemetryArray[i].measurement;
-      count++;
-    }
-  }
-  average = sum / count;
-  for (int i = 0; i < arraySize; i++) {
-    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
-      stdev += pow(telemetryArray[i].measurement - average, 2);
-    }
-  }
-  return sqrt(stdev / count);
-}
-
 void locationStats(TelemetryData *telemetryArray, int arraySize) {
   char locationName[34];
   printf("Enter the Location to filter statistics: ");
@@ -189,6 +147,78 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
          pressureSTDev, temperatureSTDev, visibilitySTDev, UVradiationSTDev);
 }
 
+void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
+  char sensorID[10];
+  char sensorType[20];
+  printf("Enter the Sensor ID to filter statistics: ");
+  scanf_s("%9s", sensorID, (unsigned)(sizeof(sensorID) / sizeof(sensorID[0])));
+
+  double sensorTotal = sumSensorID(telemetryArray, arraySize, sensorID);
+  int sensorCount = countSensorID(telemetryArray, arraySize, sensorID);
+  double sensorMean = sensorTotal / sensorCount;
+  double sensorSTDev = stdevSensorID(telemetryArray, arraySize, sensorID);
+
+  // int count = 0;
+  for (int i = 0; i < arraySize; ++i) {
+    if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
+      // count++;
+      strcpy(sensorType, telemetryArray[i].sensorType);
+      break;
+    }
+  }
+
+  // printf("Count is %d", count);
+
+  system("cls");
+  printf("==== Statistics for %s ====\n", sensorID);
+  printf("\t%s\n", sensorType);
+  printf("Total:\t%.1f\n", sensorTotal);
+  printf("Mean:\t%.1f\n", sensorMean);
+  printf("Stdev\t%.1f\n", sensorSTDev);
+}
+
+double sumSensorType(TelemetryData *telemetryArray, int arraySize,
+                     char *sensorType) {
+  double total = 0;
+  for (int i = 0; i < arraySize; ++i) {
+    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+      total += telemetryArray[i].measurement;
+    }
+  }
+  return total;
+}
+
+int countSensorType(TelemetryData *telemetryArray, int arraySize,
+                    char *sensorType) {
+  int count = 0;
+  for (int i = 0; i < arraySize; ++i) {
+    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+      count++;
+    }
+  }
+  return count;
+}
+
+double stdevSensorType(TelemetryData *telemetryArray, int arraySize,
+                       char *sensorType) {
+  double stdev = 0, average = 0, sum = 0;
+  int count = 0;
+
+  for (int i = 0; i < arraySize; i++) {
+    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+      sum += telemetryArray[i].measurement;
+      count++;
+    }
+  }
+  average = sum / count;
+  for (int i = 0; i < arraySize; i++) {
+    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+      stdev += pow(telemetryArray[i].measurement - average, 2);
+    }
+  }
+  return sqrt(stdev / count);
+}
+
 double meanLocationName(TelemetryData *telemetryArray, int arraySize,
                         char *sensorType, char *locationName) {
   double mean =
@@ -244,36 +274,6 @@ double stdevLocationName(TelemetryData *telemetryArray, int arraySize,
     }
   }
   return sqrt(stdev / count);
-}
-
-void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
-  char sensorID[10];
-  char sensorType[20];
-  printf("Enter the Sensor ID to filter statistics: ");
-  scanf_s("%9s", sensorID, (unsigned)(sizeof(sensorID) / sizeof(sensorID[0])));
-
-  double sensorTotal = sumSensorID(telemetryArray, arraySize, sensorID);
-  int sensorCount = countSensorID(telemetryArray, arraySize, sensorID);
-  double sensorMean = sensorTotal / sensorCount;
-  double sensorSTDev = stdevSensorID(telemetryArray, arraySize, sensorID);
-
-  // int count = 0;
-  for (int i = 0; i < arraySize; ++i) {
-    if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
-      // count++;
-      strcpy(sensorType, telemetryArray[i].sensorType);
-      break;
-    }
-  }
-
-  // printf("Count is %d", count);
-
-  system("cls");
-  printf("==== Statistics for %s ====\n", sensorID);
-  printf("\t%s\n", sensorType);
-  printf("Total:\t%.1f\n", sensorTotal);
-  printf("Mean:\t%.1f\n", sensorMean);
-  printf("Stdev\t%.1f\n", sensorSTDev);
 }
 
 double sumSensorID(TelemetryData *telemetryArray, int arraySize,
