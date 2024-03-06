@@ -52,15 +52,20 @@ void allCond(TelemetryData* telemetryArray, int arraySize) {
     return;
 }
 
-void getLocationCond(TelemetryData* telemetryArray, int arraySize, char* locationName) {
-    char weatherConditions[10];
-    //char locationName[34];
+void locationCond(TelemetryData* telemetryArray, int arraySize) {
+    char locationName[34];
 
-    //printf("Enter the Location to calculate weather conditions: ");
-    //while (getchar() != '\n')
-    //    ;
-    //scanf_s("%33[^\n]", locationName,
-    //    (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+printf("Enter the Location to calculate weather conditions: ");
+while (getchar() != '\n')
+    ;
+scanf_s("%33[^\n]", locationName,
+    (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+getLocationCond(telemetryArray, arraySize, locationName);
+}
+
+void getLocationCond(TelemetryData* telemetryArray, int arraySize, char* locationName) {
+    
+    char weatherConditions[10];
 
     double windspeedMean = meanLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
     double pressureMean = meanLocationName(telemetryArray, arraySize, "Pressure", locationName);
