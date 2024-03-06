@@ -11,6 +11,7 @@ void allStats(TelemetryData *telemetryArray, int arraySize);
 void locationStats(TelemetryData *telemetryArray, int arraySize);
 void sensorIDStats(TelemetryData *telemetryArray, int arraySize);
 
+double meanLocationName(TelemetryData* telemetryArray, int arraySize, char* sensorType, char* locationName);
 double sumSensorType(TelemetryData *telemetryArray, int arraySize,
                      char *sensorType);
 int countSensorType(TelemetryData *telemetryArray, int arraySize,
