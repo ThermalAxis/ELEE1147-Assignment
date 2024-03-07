@@ -5,6 +5,10 @@
 #include <string.h>
 #include <time.h>
 
+/*
+Yes I know that my code is messy and unoptimised.
+*/
+
 void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
 
   int weatherChoice;
@@ -112,31 +116,6 @@ void timeframeLocationConditions(TelemetryData* telemetryArray, int arraySize) {
 
 }
 
-
-time_t getStartTimestamp(TelemetryData* telemetryArray, int arraySize) {
-    time_t startTimeEpoch = convertTimestamp(telemetryArray[0].timestamp);
-    // find earliest timestamp
-    for (int i = 0; i < arraySize; i++) {
-        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
-        if (difftime(currentEpoch, startTimeEpoch) < 0) {
-            startTimeEpoch = currentEpoch;
-        }
-    }
-    return startTimeEpoch;
-}
-
-time_t getEndTimestamp(TelemetryData* telemetryArray, int arraySize) {
-    time_t endTimeEpoch = 0;
-    // find latest timestamp
-    for (int i = 0; i < arraySize; i++) {
-        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
-        if (difftime(currentEpoch, endTimeEpoch) > 0) {
-            endTimeEpoch = currentEpoch;
-        }
-    }
-    return endTimeEpoch;
-}
-
 void hourlyConditions(TelemetryData* telemetryArray, int arraySize, char *location, const time_t startTimeEpoch, const time_t endTimeEpoch) {
         printf("\n==== %s ====\n", location);
         time_t startDayEpochOffset = startTimeEpoch;
@@ -228,7 +207,3 @@ char *getWeatherConditions(double sensorPressure, double sensorTemperature,
   }
   return result;
 }
-
-/*
-Yes I know that my code is messy and unoptimised.
-*/

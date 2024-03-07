@@ -19,10 +19,6 @@ char *getWeatherConditions(double sensorPressure, double sensorTemperature,
                            double sensorWindSpeed, double sensorVisibility,
                            double sensorUVRadiation);
 
-time_t getStartTimestamp(TelemetryData* telemetryArray, int arraySize);
-
-time_t getEndTimestamp(TelemetryData* telemetryArray, int arraySize);
-
 void timeframeLocationConditions(TelemetryData* telemetryArray, int arraySize);
 
 #endif

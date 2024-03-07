@@ -157,3 +157,27 @@ time_t convertTimestamp(char *timestamp) {
 
   return epoch;
 }
+
+time_t getStartTimestamp(TelemetryData* telemetryArray, int arraySize) {
+    time_t startTimeEpoch = convertTimestamp(telemetryArray[0].timestamp);
+    // find earliest timestamp
+    for (int i = 0; i < arraySize; i++) {
+        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
+        if (difftime(currentEpoch, startTimeEpoch) < 0) {
+            startTimeEpoch = currentEpoch;
+        }
+    }
+    return startTimeEpoch;
+}
+
+time_t getEndTimestamp(TelemetryData* telemetryArray, int arraySize) {
+    time_t endTimeEpoch = 0;
+    // find latest timestamp
+    for (int i = 0; i < arraySize; i++) {
+        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
+        if (difftime(currentEpoch, endTimeEpoch) > 0) {
+            endTimeEpoch = currentEpoch;
+        }
+    }
+    return endTimeEpoch;
+}

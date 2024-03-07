@@ -34,16 +34,6 @@ void filterBySensorType(TelemetryData *telemetryArray, int arraySize);
 
 // YOUR CODE BELOW THIS LINE
 
-/**
- * @brief Filter telemetry data by location name.
- *
- * This function prompts the user to enter a location name and
- * then prints telemetry data for the specified location.
- *
- * @param telemetryArray An array of TelemetryData structures.
- * @param arraySize The size of the telemetryArray.
- */
-void filterByLocation(TelemetryData *telemetryArray, int arraySize);
 
 /**
  * @brief Filter telemetry data by sensor ID.
@@ -56,6 +46,23 @@ void filterByLocation(TelemetryData *telemetryArray, int arraySize);
  */
 void filterBySensorID(TelemetryData *telemetryArray, int arraySize);
 
+/**
+ * @brief Filter telemetry data by location name.
+ *
+ * This function prompts the user to enter a location name and
+ * then prints telemetry data for the specified location.
+ *
+ * @param telemetryArray An array of TelemetryData structures.
+ * @param arraySize The size of the telemetryArray.
+ */
+void filterByLocation(TelemetryData *telemetryArray, int arraySize);
+
+
+void filterByTimeStamp(TelemetryData* telemetryArray, int arraySize); // this doesn't work atm
+
 time_t convertTimestamp(char *timestamp);
+
+time_t getStartTimestamp(TelemetryData* telemetryArray, int arraySize);
+time_t getEndTimestamp(TelemetryData* telemetryArray, int arraySize);
 
 #endif // TELEMETRY_FUNCTIONS_H

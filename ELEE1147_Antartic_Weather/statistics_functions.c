@@ -4,6 +4,10 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+this needs a LOT of optimisation
+*/
+
 int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
   int statisticsChoice;
   system("cls");
