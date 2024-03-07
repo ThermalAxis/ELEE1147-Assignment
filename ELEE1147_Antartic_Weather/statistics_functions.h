@@ -13,8 +13,9 @@ void sensorIDStats(TelemetryData *telemetryArray, int arraySize);
 
 double meanLocationName(TelemetryData *telemetryArray, int arraySize,
                         char *sensorType, char *locationName);
-double meanLocationNameTime(TelemetryData* telemetryArray, int arraySize,
-    char* sensorType, char* locationName, time_t startOffset);
+double meanLocationNameTime(TelemetryData *telemetryArray, int arraySize,
+                            char *sensorType, char *locationName,
+                            time_t startOffset);
 
 double sumSensorType(TelemetryData *telemetryArray, int arraySize,
                      char *sensorType);

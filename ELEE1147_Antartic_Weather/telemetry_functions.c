@@ -98,12 +98,12 @@ void filterByTimeStamp(TelemetryData *telemetryArray, int arraySize) {
   struct tm startTimeSelect;
   struct tm endTimeSelect;
 
-  //char startTime[20];
-  //char endTime[20];
-  //printf("Enter the start timestamp to filter in the format "
-  //       "'YYYY-MM-DDTHH:MM:SSZ'\n");
-  //printf("Start time: ");
-  //scanf_s("%s", startTime, sizeof(startTime));
+  // char startTime[20];
+  // char endTime[20];
+  // printf("Enter the start timestamp to filter in the format "
+  //        "'YYYY-MM-DDTHH:MM:SSZ'\n");
+  // printf("Start time: ");
+  // scanf_s("%s", startTime, sizeof(startTime));
 
   ///* sscanf_s(startTime, "%4d-%2d-%2dT%2d:%2d:%2d", &startTimeStamp.year,
   //          &startTimeStamp.month, &startTimeStamp.day, &startTimeStamp.hour,
@@ -112,14 +112,14 @@ void filterByTimeStamp(TelemetryData *telemetryArray, int arraySize) {
   //          &endTimeStamp.month, &endTimeStamp.day, &endTimeStamp.hour,
   //          &endTimeStamp.minute, &endTimeStamp.second);*/
 
-  //printf("Inut Start Time: %s\n", startTime);
+  // printf("Inut Start Time: %s\n", startTime);
   //// printf("End: %s\n", endTime);
 
-  //printf("Start timestamp:\n");
-  //printf(
-  //    "Year: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond: %d\n",
-  //    startTimeStamp.year, startTimeStamp.month, startTimeStamp.day,
-  //    startTimeStamp.hour, startTimeStamp.minute, &startTimeStamp.second);
+  // printf("Start timestamp:\n");
+  // printf(
+  //     "Year: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond:
+  //     %d\n", startTimeStamp.year, startTimeStamp.month, startTimeStamp.day,
+  //     startTimeStamp.hour, startTimeStamp.minute, &startTimeStamp.second);
 
   // printf("Telemetry Data for Time range '%s':\n", locationName);
   // for (int i = 0; i < arraySize; ++i) {
@@ -158,26 +158,26 @@ time_t convertTimestamp(char *timestamp) {
   return epoch;
 }
 
-time_t getStartTimestamp(TelemetryData* telemetryArray, int arraySize) {
-    time_t startTimeEpoch = convertTimestamp(telemetryArray[0].timestamp);
-    // find earliest timestamp
-    for (int i = 0; i < arraySize; i++) {
-        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
-        if (difftime(currentEpoch, startTimeEpoch) < 0) {
-            startTimeEpoch = currentEpoch;
-        }
+time_t getStartTimestamp(TelemetryData *telemetryArray, int arraySize) {
+  time_t startTimeEpoch = convertTimestamp(telemetryArray[0].timestamp);
+  // find earliest timestamp
+  for (int i = 0; i < arraySize; i++) {
+    time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
+    if (difftime(currentEpoch, startTimeEpoch) < 0) {
+      startTimeEpoch = currentEpoch;
     }
-    return startTimeEpoch;
+  }
+  return startTimeEpoch;
 }
 
-time_t getEndTimestamp(TelemetryData* telemetryArray, int arraySize) {
-    time_t endTimeEpoch = 0;
-    // find latest timestamp
-    for (int i = 0; i < arraySize; i++) {
-        time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
-        if (difftime(currentEpoch, endTimeEpoch) > 0) {
-            endTimeEpoch = currentEpoch;
-        }
+time_t getEndTimestamp(TelemetryData *telemetryArray, int arraySize) {
+  time_t endTimeEpoch = 0;
+  // find latest timestamp
+  for (int i = 0; i < arraySize; i++) {
+    time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
+    if (difftime(currentEpoch, endTimeEpoch) > 0) {
+      endTimeEpoch = currentEpoch;
     }
-    return endTimeEpoch;
+  }
+  return endTimeEpoch;
 }
