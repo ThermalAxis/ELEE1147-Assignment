@@ -1,7 +1,12 @@
 #include "statistics_functions.h"
+#include "telemetry_functions.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
+
+/*
+this needs a LOT of optimisation
+*/
 
 int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
   int statisticsChoice;
@@ -10,6 +15,7 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
   printf("1 - Statistics of all data\n");
   printf("2 - Statistics by Location\n");
   printf("3 - Statistics by Sensor ID\n");
+  printf("4 - Main menu\n");
 
   printf("\nEnter your choice (1-4): ");
 
@@ -29,8 +35,9 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
     return 0;
   case 3:
     sensorIDStats(telemetryArray, arraySize);
-    system("pause");
     system("timeout /T 30");
+    return 0;
+  case 4:
     return 0;
   }
 }
@@ -83,6 +90,101 @@ void allStats(TelemetryData *telemetryArray, int arraySize) {
          pressureSTDev, temperatureSTDev, visibilitySTDev, UVradiationSTDev);
 }
 
+void locationStats(TelemetryData *telemetryArray, int arraySize) {
+  char locationName[34];
+  printf("Enter the Location to filter statistics: ");
+  while (getchar() != '\n')
+    ;
+  scanf_s("%33[^\n]", locationName,
+          (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+
+  double windspeedTotal =
+      sumLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
+  int windspeedCount =
+      countLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
+  double windspeedMean =
+      meanLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
+  double windspeedSTDev =
+      stdevLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
+
+  double pressureTotal =
+      sumLocationName(telemetryArray, arraySize, "Pressure", locationName);
+  int pressureCount =
+      countLocationName(telemetryArray, arraySize, "Pressure", locationName);
+  double pressureMean =
+      meanLocationName(telemetryArray, arraySize, "Pressure", locationName);
+  double pressureSTDev =
+      stdevLocationName(telemetryArray, arraySize, "Pressure", locationName);
+
+  double temperatureTotal =
+      sumLocationName(telemetryArray, arraySize, "Temperature", locationName);
+  int temperatureCount =
+      countLocationName(telemetryArray, arraySize, "Temperature", locationName);
+  double temperatureMean =
+      meanLocationName(telemetryArray, arraySize, "Temperature", locationName);
+  double temperatureSTDev =
+      stdevLocationName(telemetryArray, arraySize, "Temperature", locationName);
+
+  double visibilityTotal =
+      sumLocationName(telemetryArray, arraySize, "Visibility", locationName);
+  int visibilityCount =
+      countLocationName(telemetryArray, arraySize, "Visibility", locationName);
+  double visibilityMean =
+      meanLocationName(telemetryArray, arraySize, "Visibility", locationName);
+  double visibilitySTDev =
+      stdevLocationName(telemetryArray, arraySize, "Visibility", locationName);
+
+  double UVradiationTotal =
+      sumLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
+  int UVradiationCount =
+      countLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
+  double UVradiationMean =
+      meanLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
+  double UVradiationSTDev =
+      stdevLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
+
+  system("cls");
+  printf("\n==== Statistics for %s ====", locationName);
+  printf("\n\tWindspeed (km/h) Pressure (hPa)\tTemperature (C)\tVisibility "
+         "(m)\tUV Index\n");
+  printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", windspeedTotal,
+         pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal);
+  printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedMean,
+         pressureMean, temperatureMean, visibilityMean, UVradiationMean);
+  printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedSTDev,
+         pressureSTDev, temperatureSTDev, visibilitySTDev, UVradiationSTDev);
+}
+
+void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
+  char sensorID[10];
+  char sensorType[20];
+  printf("Enter the Sensor ID to filter statistics: ");
+  scanf_s("%9s", sensorID, (unsigned)(sizeof(sensorID) / sizeof(sensorID[0])));
+
+  double sensorTotal = sumSensorID(telemetryArray, arraySize, sensorID);
+  int sensorCount = countSensorID(telemetryArray, arraySize, sensorID);
+  double sensorMean = sensorTotal / sensorCount;
+  double sensorSTDev = stdevSensorID(telemetryArray, arraySize, sensorID);
+
+  // int count = 0;
+  for (int i = 0; i < arraySize; ++i) {
+    if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
+      // count++;
+      strcpy(sensorType, telemetryArray[i].sensorType);
+      break;
+    }
+  }
+
+  // printf("Count is %d", count);
+
+  system("cls");
+  printf("==== Statistics for %s ====\n", sensorID);
+  printf("\t%s\n", sensorType);
+  printf("Total:\t%.1f\n", sensorTotal);
+  printf("Mean:\t%.1f\n", sensorMean);
+  printf("Stdev\t%.1f\n", sensorSTDev);
+}
+
 double sumSensorType(TelemetryData *telemetryArray, int arraySize,
                      char *sensorType) {
   double total = 0;
@@ -125,64 +227,29 @@ double stdevSensorType(TelemetryData *telemetryArray, int arraySize,
   return sqrt(stdev / count);
 }
 
-void locationStats(TelemetryData *telemetryArray, int arraySize) {
-  char locationName[34];
-  printf("Enter the Location to filter statistics: ");
-  while (getchar() != '\n')
-    ;
-  scanf_s("%33[^\n]", locationName,
-          (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+double meanLocationName(TelemetryData *telemetryArray, int arraySize,
+                        char *sensorType, char *locationName) {
+  double mean =
+      sumLocationName(telemetryArray, arraySize, sensorType, locationName) /
+      countLocationName(telemetryArray, arraySize, sensorType, locationName);
+  return mean;
+}
 
-  double windspeedTotal =
-      sumLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
-  int windspeedCount =
-      countLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
-  double windspeedMean = windspeedTotal / windspeedCount;
-  double windspeedSTDev =
-      stdevLocationName(telemetryArray, arraySize, "WindSpeed", locationName);
-
-  double pressureTotal =
-      sumLocationName(telemetryArray, arraySize, "Pressure", locationName);
-  int pressureCount =
-      countLocationName(telemetryArray, arraySize, "Pressure", locationName);
-  double pressureMean = pressureTotal / pressureCount;
-  double pressureSTDev =
-      stdevLocationName(telemetryArray, arraySize, "Pressure", locationName);
-
-  double temperatureTotal =
-      sumLocationName(telemetryArray, arraySize, "Temperature", locationName);
-  int temperatureCount =
-      countLocationName(telemetryArray, arraySize, "Temperature", locationName);
-  double temperatureMean = temperatureTotal / temperatureCount;
-  double temperatureSTDev =
-      stdevLocationName(telemetryArray, arraySize, "Temperature", locationName);
-
-  double visibilityTotal =
-      sumLocationName(telemetryArray, arraySize, "Visibility", locationName);
-  int visibilityCount =
-      countLocationName(telemetryArray, arraySize, "Visibility", locationName);
-  double visibilityMean = visibilityTotal / visibilityCount;
-  double visibilitySTDev =
-      stdevLocationName(telemetryArray, arraySize, "Visibility", locationName);
-
-  double UVradiationTotal =
-      sumLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
-  int UVradiationCount =
-      countLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
-  double UVradiationMean = UVradiationTotal / UVradiationCount;
-  double UVradiationSTDev =
-      stdevLocationName(telemetryArray, arraySize, "UVRadiation", locationName);
-
-  system("cls");
-  printf("\n==== Statistics for %s ====", locationName);
-  printf("\n\tWindspeed (km/h) Pressure (hPa)\tTemperature (C)\tVisibility "
-         "(m)\tUV Index\n");
-  printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", windspeedTotal,
-         pressureTotal, temperatureTotal, visibilityTotal, UVradiationTotal);
-  printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedMean,
-         pressureMean, temperatureMean, visibilityMean, UVradiationMean);
-  printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedSTDev,
-         pressureSTDev, temperatureSTDev, visibilitySTDev, UVradiationSTDev);
+double meanLocationNameTime(TelemetryData* telemetryArray, int arraySize,
+    char* sensorType, char* locationName, time_t startOffset) {
+    double total = 0;
+    int count = 0;
+    for (int i = 0; i < arraySize; ++i) {
+        if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
+            strcmp(telemetryArray[i].location, locationName) == 0 &&
+            convertTimestamp(telemetryArray[i].timestamp) >= startOffset &&
+            convertTimestamp(telemetryArray[i].timestamp) <= (startOffset + (3600 * 6) - 1)) {
+            total += telemetryArray[i].measurement;
+            count++;
+        }
+    }
+    //printf("Mean at %s for %s between %ld and %ld is %d", locationName, sensorType, startOffset, endOffset, total / count);
+    return total/count;
 }
 
 double sumLocationName(TelemetryData *telemetryArray, int arraySize,
@@ -232,36 +299,6 @@ double stdevLocationName(TelemetryData *telemetryArray, int arraySize,
     }
   }
   return sqrt(stdev / count);
-}
-
-void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
-  char sensorID[10];
-  char sensorType[20];
-  printf("Enter the Sensor ID to filter statistics: ");
-  scanf_s("%9s", sensorID, (unsigned)(sizeof(sensorID) / sizeof(sensorID[0])));
-
-  double sensorTotal = sumSensorID(telemetryArray, arraySize, sensorID);
-  int sensorCount = countSensorID(telemetryArray, arraySize, sensorID);
-  double sensorMean = sensorTotal / sensorCount;
-  double sensorSTDev = stdevSensorID(telemetryArray, arraySize, sensorID);
-
-  // int count = 0;
-  for (int i = 0; i < arraySize; ++i) {
-    if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
-      // count++;
-      strcpy(sensorType, telemetryArray[i].sensorType);
-      break;
-    }
-  }
-
-  // printf("Count is %d", count);
-
-  system("cls");
-  printf("==== Statistics for %s ====\n", sensorID);
-  printf("\t%s\n", sensorType);
-  printf("Total:\t%.1f\n", sensorTotal);
-  printf("Mean:\t%.1f\n", sensorMean);
-  printf("Stdev\t%.1f\n", sensorSTDev);
 }
 
 double sumSensorID(TelemetryData *telemetryArray, int arraySize,
