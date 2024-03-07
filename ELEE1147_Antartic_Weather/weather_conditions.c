@@ -1,6 +1,6 @@
-#include "weather_conditions.h"
 #include "statistics_functions.h"
 #include "telemetry_functions.h"
+#include "weather_conditions.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -16,7 +16,8 @@ void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
   printf("==== Weather conditions for telemetry data ====\n");
   printf("1 - Display hourly weather conditions for all locations\n");
   printf("2 - Display hourly weather conditions by location\n");
-  //printf("3 - Display weather conditions for a specific timeframe and location\n");
+  // printf("3 - Display weather conditions for a specific timeframe and
+  // location\n");
   printf("3 - Main menu\n");
 
   printf("\nEnter your choice (1-3): ");
@@ -29,22 +30,22 @@ void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
     system("timeout /T 3>nul");
     return 0;
   case 1:
-      system("cls");
+    system("cls");
     allCond(telemetryArray, arraySize);
     printf("\nPress any key to return to main menu...");
     system("pause>nul");
     return 0;
   case 2:
-      system("cls");
+    system("cls");
     locationCond(telemetryArray, arraySize);
     system("pause>nul");
     return 0;
- /* case 3:
-      timeframeLocationConditions(telemetryArray, arraySize);
-      system("pause>nul");
-    return 0;*/
+    /* case 3:
+         timeframeLocationConditions(telemetryArray, arraySize);
+         system("pause>nul");
+       return 0;*/
   case 3:
-      return 0;
+    return 0;
   }
 }
 
@@ -69,104 +70,116 @@ void allCond(TelemetryData *telemetryArray, int arraySize) {
   localtime_s(&endTime, &endTimeEpoch);
 
   for (int i = 0; i < 5; i++) {
-      hourlyConditions(telemetryArray, arraySize, locations[i], startDayEpoch, endTimeEpoch);
+    hourlyConditions(telemetryArray, arraySize, locations[i], startDayEpoch,
+                     endTimeEpoch);
   }
 
   return;
 }
 
-void locationCond(TelemetryData* telemetryArray, int arraySize) {
-    char locationName[34];
+void locationCond(TelemetryData *telemetryArray, int arraySize) {
+  char locationName[34];
 
-    printf("Enter the Location to display weather conditions: ");
-    while (getchar() != '\n');
-    scanf_s("%33[^\n]", locationName,
-        (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
-    hourlyConditions(telemetryArray, arraySize, locationName, getStartTimestamp(telemetryArray, arraySize), getEndTimestamp(telemetryArray, arraySize));
+  printf("Enter the Location to display weather conditions: ");
+  while (getchar() != '\n')
+    ;
+  scanf_s("%33[^\n]", locationName,
+          (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+  hourlyConditions(telemetryArray, arraySize, locationName,
+                   getStartTimestamp(telemetryArray, arraySize),
+                   getEndTimestamp(telemetryArray, arraySize));
 }
 
-void timeframeLocationConditions(TelemetryData* telemetryArray, int arraySize) {
-    char locationName[34], startTimeStr[20], endTimeStr[20];
-    time_t startTimeSelect;
-    time_t endTimeSelect;
-    printf("Enter the location to display weather conditions: ");
-    while (getchar() != '\n');
-    scanf_s("%33[^\n]", locationName,
-        (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+void timeframeLocationConditions(TelemetryData *telemetryArray, int arraySize) {
+  char locationName[34], startTimeStr[20], endTimeStr[20];
+  time_t startTimeSelect;
+  time_t endTimeSelect;
+  printf("Enter the location to display weather conditions: ");
+  while (getchar() != '\n')
+    ;
+  scanf_s("%33[^\n]", locationName,
+          (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
 
-    printf("Enter the start timestamp to filter in the format "
-        "'YYYY-MM-DDTHH:MM:SSZ'\n");
-    printf("Start time: ");
-    scanf_s("%s", startTimeStr, sizeof(startTimeStr));
-    startTimeSelect = convertTimestamp(startTimeStr);
+  printf("Enter the start timestamp to filter in the format "
+         "'YYYY-MM-DDTHH:MM:SSZ'\n");
+  printf("Start time: ");
+  scanf_s("%s", startTimeStr, sizeof(startTimeStr));
+  startTimeSelect = convertTimestamp(startTimeStr);
 
-    printf("Enter the end timestamp to filter in the format "
-        "'YYYY-MM-DDTHH:MM:SSZ'\n");
-    printf("End time: ");
-    scanf_s("%s", endTimeStr, sizeof(endTimeStr));
-    endTimeSelect = convertTimestamp(endTimeStr);
+  printf("Enter the end timestamp to filter in the format "
+         "'YYYY-MM-DDTHH:MM:SSZ'\n");
+  printf("End time: ");
+  scanf_s("%s", endTimeStr, sizeof(endTimeStr));
+  endTimeSelect = convertTimestamp(endTimeStr);
 
-    if (endTimeSelect < startTimeSelect) {
-        printf("End date cannot be before start date!");
+  if (endTimeSelect < startTimeSelect) {
+    printf("End date cannot be before start date!");
+  }
+
+  printf("locationName = %s, startTimeSelect = %ld, endtimeSelect = %ls",
+         locationName, startTimeSelect, endTimeSelect);
+
+  hourlyConditions(telemetryArray, arraySize, locationName, startTimeSelect,
+                   endTimeSelect);
+}
+
+void hourlyConditions(TelemetryData *telemetryArray, int arraySize,
+                      char *location, const time_t startTimeEpoch,
+                      const time_t endTimeEpoch) {
+  printf("\n==== %s ====\n", location);
+  time_t startDayEpochOffset = startTimeEpoch;
+  time_t endDayEpochOffset = startDayEpochOffset + ((3600 * 1) - 1);
+  while (endDayEpochOffset < endTimeEpoch) {
+    for (int k = 0; k < 24; k++) {
+      // printf("int j = %d\n", j);
+      getLocationCondTime(telemetryArray, arraySize, location,
+                          startDayEpochOffset);
+      startDayEpochOffset = startDayEpochOffset + (3600 * 1);
+      endDayEpochOffset = startDayEpochOffset + ((3600 * 1) - 1);
     }
-
-    printf("locationName = %s, startTimeSelect = %ld, endtimeSelect = %ls", locationName, startTimeSelect, endTimeSelect);
-
-    hourlyConditions(telemetryArray, arraySize, locationName, startTimeSelect, endTimeSelect);
-
+  }
+  // printf("\n");
 }
 
-void hourlyConditions(TelemetryData* telemetryArray, int arraySize, char *location, const time_t startTimeEpoch, const time_t endTimeEpoch) {
-        printf("\n==== %s ====\n", location);
-        time_t startDayEpochOffset = startTimeEpoch;
-        time_t endDayEpochOffset = startDayEpochOffset + ((3600 * 1) - 1);
-        while (endDayEpochOffset < endTimeEpoch) {
-            for (int k = 0; k < 24; k++) {
-                //printf("int j = %d\n", j);
-                getLocationCondTime(telemetryArray, arraySize, location, startDayEpochOffset);
-                startDayEpochOffset = startDayEpochOffset + (3600 * 1);
-                endDayEpochOffset = startDayEpochOffset + ((3600 * 1) - 1);
-            }
-        }
-        //printf("\n");
-}
+void getLocationCondTime(TelemetryData *telemetryArray, int arraySize,
+                         char *locationName, time_t startOffset) {
 
-void getLocationCondTime(TelemetryData* telemetryArray, int arraySize,
-    char* locationName, time_t startOffset) {
+  char weatherConditions[10];
+  struct tm startTime;
+  struct tm endTime;
 
-    char weatherConditions[10];
-    struct tm startTime;
-    struct tm endTime;
+  localtime_s(&startTime, &startOffset);
 
-    localtime_s(&startTime, &startOffset);
+  time_t endOffset = startOffset + ((3600 * 6) - 1);
+  localtime_s(&endTime, &endOffset);
 
-    time_t endOffset = startOffset + ((3600 * 6) - 1);
-    localtime_s(&endTime, &endOffset);
+  // printf("location name is: %s, start time is: %ld\n", locationName,
+  // startOffset);
 
-    //printf("location name is: %s, start time is: %ld\n", locationName, startOffset);
+  double windspeedMean = meanLocationNameTime(
+      telemetryArray, arraySize, "WindSpeed", locationName, startOffset);
+  double pressureMean = meanLocationNameTime(
+      telemetryArray, arraySize, "Pressure", locationName, startOffset);
+  double temperatureMean = meanLocationNameTime(
+      telemetryArray, arraySize, "Temperature", locationName, startOffset);
+  double visibilityMean = meanLocationNameTime(
+      telemetryArray, arraySize, "Visibility", locationName, startOffset);
+  double UVradiationMean = meanLocationNameTime(
+      telemetryArray, arraySize, "UVRadiation", locationName, startOffset);
 
-    double windspeedMean =
-        meanLocationNameTime(telemetryArray, arraySize, "WindSpeed", locationName, startOffset);
-    double pressureMean =
-        meanLocationNameTime(telemetryArray, arraySize, "Pressure", locationName, startOffset);
-    double temperatureMean =
-        meanLocationNameTime(telemetryArray, arraySize, "Temperature", locationName, startOffset);
-    double visibilityMean =
-        meanLocationNameTime(telemetryArray, arraySize, "Visibility", locationName, startOffset);
-    double UVradiationMean =
-        meanLocationNameTime(telemetryArray, arraySize, "UVRadiation", locationName, startOffset);
+  strcpy(weatherConditions,
+         getWeatherConditions(pressureMean, temperatureMean, windspeedMean,
+                              visibilityMean, UVradiationMean));
+  printf("%04d-%02d-%02d %02d:%02d - %s\n", startTime.tm_year += 1900,
+         startTime.tm_mon += 1, startTime.tm_mday, startTime.tm_hour,
+         startTime.tm_min, weatherConditions);
 
-    strcpy(weatherConditions,
-        getWeatherConditions(pressureMean, temperatureMean, windspeedMean,
-            visibilityMean, UVradiationMean));
-    printf("%04d-%02d-%02d %02d:%02d - %s\n",
-        startTime.tm_year += 1900, startTime.tm_mon += 1, startTime.tm_mday, startTime.tm_hour, startTime.tm_min,
-        weatherConditions);
-
-    //printf("%04d-%02d-%02dT%02d:%02d:%02dZ to %04d-%02d-%02dT%02d:%02d:%02dZ %s\n", 
-    //    startTime.tm_year += 1900, startTime.tm_mon += 1, startTime.tm_mday, startTime.tm_hour, startTime.tm_min, startTime.tm_sec,
-    //    endTime.tm_year += 1900, endTime.tm_mon += 1, endTime.tm_mday, endTime.tm_hour, endTime.tm_min, endTime.tm_sec,
-    //    weatherConditions);
+  // printf("%04d-%02d-%02dT%02d:%02d:%02dZ to %04d-%02d-%02dT%02d:%02d:%02dZ
+  // %s\n",
+  //     startTime.tm_year += 1900, startTime.tm_mon += 1, startTime.tm_mday,
+  //     startTime.tm_hour, startTime.tm_min, startTime.tm_sec, endTime.tm_year
+  //     += 1900, endTime.tm_mon += 1, endTime.tm_mday, endTime.tm_hour,
+  //     endTime.tm_min, endTime.tm_sec, weatherConditions);
 }
 
 char *getWeatherConditions(double sensorPressure, double sensorTemperature,

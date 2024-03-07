@@ -10,15 +10,17 @@ void weatherConditions(TelemetryData *telemetryArray, int arraySize);
 void allCond(TelemetryData *telemetryArray, int arraySize);
 void locationCond(TelemetryData *telemetryArray, int arraySize);
 
-void getLocationCondTime(TelemetryData* telemetryArray, int arraySize,
-    char* locationName, time_t startOffset);
+void getLocationCondTime(TelemetryData *telemetryArray, int arraySize,
+                         char *locationName, time_t startOffset);
 
-void hourlyConditions(TelemetryData* telemetryArray, int arraySize, char* location, const time_t startTimeEpoch, const time_t endTimeEpoch);
+void hourlyConditions(TelemetryData *telemetryArray, int arraySize,
+                      char *location, const time_t startTimeEpoch,
+                      const time_t endTimeEpoch);
 
 char *getWeatherConditions(double sensorPressure, double sensorTemperature,
                            double sensorWindSpeed, double sensorVisibility,
                            double sensorUVRadiation);
 
-void timeframeLocationConditions(TelemetryData* telemetryArray, int arraySize);
+void timeframeLocationConditions(TelemetryData *telemetryArray, int arraySize);
 
 #endif
