@@ -134,7 +134,6 @@ void filterByTimeStamp(TelemetryData *telemetryArray, int arraySize) {
   //     }
   // }
 
-  system("pause");
   return;
 }
 

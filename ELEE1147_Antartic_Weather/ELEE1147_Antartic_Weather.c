@@ -25,7 +25,7 @@ int main() {
     printf("3. Filter by Location\n");
     printf("4. Filter by Sensor Type\n");
     printf("5. Filter by Sensor ID\n");
-    printf("6. Filter by Time\n");
+    printf("6. Test function\n");
     printf("7. Statistics Functions\n");
     printf("8. Export to CSV\n");
     printf("9. Exit\n");
@@ -72,7 +72,7 @@ int main() {
       filterBySensorID(telemetryArray, arraySize);
       break;
     case 6:
-      filterByTimeStamp(telemetryArray, arraySize);
+        //filterByTimeStamp(telemetryArray, arraySize);
       break;
     case 7:
       statisticsFunctions(telemetryArray, arraySize);

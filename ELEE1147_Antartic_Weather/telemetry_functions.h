@@ -2,6 +2,7 @@
 #pragma region // DO NOT TOUCH
 #ifndef TELEMETRY_FUNCTIONS_H
 #define TELEMETRY_FUNCTIONS_H
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "json_parser.h" // YOU CAN ADD OTHER HEADERS UNDERNEATH OR ABOVE
 
@@ -57,7 +58,7 @@ void filterBySensorID(TelemetryData *telemetryArray, int arraySize);
 void filterByLocation(TelemetryData *telemetryArray, int arraySize);
 
 void filterByTimeStamp(TelemetryData *telemetryArray,
-                       int arraySize); // this doesn't work atm
+                       int arraySize); // this doesn't work atm :(
 
 time_t convertTimestamp(char *timestamp);
 
