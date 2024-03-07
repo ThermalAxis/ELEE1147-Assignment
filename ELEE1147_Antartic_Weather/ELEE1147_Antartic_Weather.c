@@ -52,7 +52,7 @@ int main() {
       status = scanfs("%d", &choice);
     }
 #endif
-    
+
     switch (choice) {
     case 1:
       displayAllData(telemetryArray, arraySize);

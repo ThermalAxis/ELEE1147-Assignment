@@ -40,23 +40,30 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
 
 void allStats(TelemetryData *telemetryArray, int arraySize) {
 
-
-  struct sensorStats windspeedStats = getSensorTypeStats(telemetryArray, arraySize, "WindSpeed");
-  struct sensorStats pressureStats = getSensorTypeStats(telemetryArray, arraySize, "Pressure");
-  struct sensorStats temperatureStats = getSensorTypeStats(telemetryArray, arraySize, "Temperature");
-  struct sensorStats visibilityStats = getSensorTypeStats(telemetryArray, arraySize, "Visibility");
-  struct sensorStats uvRadiationStats = getSensorTypeStats(telemetryArray, arraySize, "UVRadiation");
+  struct sensorStats windspeedStats =
+      getSensorTypeStats(telemetryArray, arraySize, "WindSpeed");
+  struct sensorStats pressureStats =
+      getSensorTypeStats(telemetryArray, arraySize, "Pressure");
+  struct sensorStats temperatureStats =
+      getSensorTypeStats(telemetryArray, arraySize, "Temperature");
+  struct sensorStats visibilityStats =
+      getSensorTypeStats(telemetryArray, arraySize, "Visibility");
+  struct sensorStats uvRadiationStats =
+      getSensorTypeStats(telemetryArray, arraySize, "UVRadiation");
 
   system("cls");
   printf("\n==== Statistics for all data ====\n");
   printf("\tWindspeed (km/h) Pressure (hPa)\tTemperature (C)\tVisibility "
          "(m)\tUV Index\n");
   printf("Total:\t%.1f\t\t %.1f\t%.1f\t%.1f\t%.1f\n", windspeedStats.sum,
-      pressureStats.sum, temperatureStats.sum, visibilityStats.sum, uvRadiationStats.sum);
+         pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
+         uvRadiationStats.sum);
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
-      pressureStats.mean, temperatureStats.mean, visibilityStats.mean, uvRadiationStats.mean);
+         pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
+         uvRadiationStats.mean);
   printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
-      pressureStats.STdev, temperatureStats.STdev, visibilityStats.STdev, uvRadiationStats.STdev);
+         pressureStats.STdev, temperatureStats.STdev, visibilityStats.STdev,
+         uvRadiationStats.STdev);
 }
 
 void locationStats(TelemetryData *telemetryArray, int arraySize) {
@@ -67,22 +74,30 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
   scanf_s("%33[^\n]", locationName,
           (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
 
-  struct sensorStats windspeedStats = getLocationStats(telemetryArray, arraySize, "WindSpeed", locationName);
-  struct sensorStats pressureStats = getLocationStats(telemetryArray, arraySize, "Pressure", locationName);
-  struct sensorStats temperatureStats = getLocationStats(telemetryArray, arraySize, "Temperature", locationName);
-  struct sensorStats visibilityStats = getLocationStats(telemetryArray, arraySize, "Visibility", locationName);
-  struct sensorStats uvRadiationStats = getLocationStats(telemetryArray, arraySize, "UVRadiation", locationName);
+  struct sensorStats windspeedStats =
+      getLocationStats(telemetryArray, arraySize, "WindSpeed", locationName);
+  struct sensorStats pressureStats =
+      getLocationStats(telemetryArray, arraySize, "Pressure", locationName);
+  struct sensorStats temperatureStats =
+      getLocationStats(telemetryArray, arraySize, "Temperature", locationName);
+  struct sensorStats visibilityStats =
+      getLocationStats(telemetryArray, arraySize, "Visibility", locationName);
+  struct sensorStats uvRadiationStats =
+      getLocationStats(telemetryArray, arraySize, "UVRadiation", locationName);
 
   system("cls");
   printf("\n==== Statistics for %s ====", locationName);
   printf("\n\tWindspeed (km/h) Pressure (hPa)\tTemperature (C)\tVisibility "
          "(m)\tUV Index\n");
-  printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", 
-      windspeedStats.sum, pressureStats.sum, temperatureStats.sum, visibilityStats.sum, uvRadiationStats.sum);
-  printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", 
-      windspeedStats.mean, pressureStats.mean, temperatureStats.mean, visibilityStats.mean, uvRadiationStats.mean);
-  printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", 
-      windspeedStats.STdev, pressureStats.STdev, temperatureStats.STdev, visibilityStats.STdev, uvRadiationStats.STdev);
+  printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.sum,
+         pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
+         uvRadiationStats.sum);
+  printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
+         pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
+         uvRadiationStats.mean);
+  printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
+         pressureStats.STdev, temperatureStats.STdev, visibilityStats.STdev,
+         uvRadiationStats.STdev);
 }
 
 void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
@@ -91,7 +106,8 @@ void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
   printf("Enter the Sensor ID to filter statistics: ");
   scanf_s("%9s", sensorID, (unsigned)(sizeof(sensorID) / sizeof(sensorID[0])));
 
-  struct sensorStats sensorIDStats = getSensorIDStats(telemetryArray, arraySize, sensorID);
+  struct sensorStats sensorIDStats =
+      getSensorIDStats(telemetryArray, arraySize, sensorID);
 
   // int count = 0;
   for (int i = 0; i < arraySize; ++i) {
@@ -112,87 +128,88 @@ void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
   printf("Stdev\t%.1f\n", sensorIDStats.STdev);
 }
 
-struct sensorStats getLocationStats(TelemetryData* telemetryArray, int arraySize,
-    char* sensorType, char* locationName) {
-    struct sensorStats stats;
-    double stdev = 0;
-    stats.sum = 0;
-    stats.count = 0;
-    stats.STdev = 0;
+struct sensorStats getLocationStats(TelemetryData *telemetryArray,
+                                    int arraySize, char *sensorType,
+                                    char *locationName) {
+  struct sensorStats stats;
+  double stdev = 0;
+  stats.sum = 0;
+  stats.count = 0;
+  stats.STdev = 0;
 
-    for (int i = 0; i < arraySize; ++i) {
-        if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
-            strcmp(telemetryArray[i].location, locationName) == 0) {
-            stats.sum += telemetryArray[i].measurement;
-            stats.count++;
-        }
+  for (int i = 0; i < arraySize; ++i) {
+    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
+        strcmp(telemetryArray[i].location, locationName) == 0) {
+      stats.sum += telemetryArray[i].measurement;
+      stats.count++;
     }
+  }
 
-    stats.mean = stats.sum / stats.count;
+  stats.mean = stats.sum / stats.count;
 
-    for (int i = 0; i < arraySize; i++) {
-        if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
-            strcmp(telemetryArray[i].location, locationName) == 0) {
-            stdev += pow(telemetryArray[i].measurement - stats.mean, 2);
-        }
+  for (int i = 0; i < arraySize; i++) {
+    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
+        strcmp(telemetryArray[i].location, locationName) == 0) {
+      stdev += pow(telemetryArray[i].measurement - stats.mean, 2);
     }
-    stats.STdev = sqrt(stdev / stats.count);
+  }
+  stats.STdev = sqrt(stdev / stats.count);
 
-    return stats;
+  return stats;
 }
 
-struct sensorStats getSensorTypeStats(TelemetryData* telemetryArray, int arraySize,
-    char* sensorType) {
-    struct sensorStats stats;
-    double stdev = 0;
-    stats.sum = 0;
-    stats.count = 0;
-    stats.STdev = 0;
+struct sensorStats getSensorTypeStats(TelemetryData *telemetryArray,
+                                      int arraySize, char *sensorType) {
+  struct sensorStats stats;
+  double stdev = 0;
+  stats.sum = 0;
+  stats.count = 0;
+  stats.STdev = 0;
 
-    for (int i = 0; i < arraySize; ++i) {
-        if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
-            stats.sum += telemetryArray[i].measurement;
-            stats.count++;
-        }
+  for (int i = 0; i < arraySize; ++i) {
+    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+      stats.sum += telemetryArray[i].measurement;
+      stats.count++;
     }
+  }
 
-    stats.mean = stats.sum / stats.count;
+  stats.mean = stats.sum / stats.count;
 
-    for (int i = 0; i < arraySize; i++) {
-        if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
-            stdev += pow(telemetryArray[i].measurement - stats.mean, 2);
-        }
+  for (int i = 0; i < arraySize; i++) {
+    if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
+      stdev += pow(telemetryArray[i].measurement - stats.mean, 2);
     }
-    stats.STdev = sqrt(stdev / stats.count);
+  }
+  stats.STdev = sqrt(stdev / stats.count);
 
-    return stats;
+  return stats;
 }
 
-struct sensorStats getSensorIDStats(TelemetryData* telemetryArray, int arraySize,
-    char* sensorID) {
-    struct sensorStats stats;
-    double stdev = 0;
-    stats.sum = 0;
-    stats.count = 0;
-    stats.STdev = 0;
+struct sensorStats getSensorIDStats(TelemetryData *telemetryArray,
+                                    int arraySize, char *sensorID) {
+  struct sensorStats stats;
+  double stdev = 0;
+  stats.sum = 0;
+  stats.count = 0;
+  stats.STdev = 0;
 
-    for (int i = 0; i < arraySize; ++i) {
-        if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
-            stats.sum += telemetryArray[i].measurement;
-            stats.count++;
-        }
+  for (int i = 0; i < arraySize; ++i) {
+    if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
+      stats.sum += telemetryArray[i].measurement;
+      stats.count++;
     }
+  }
 
-    stats.mean = stats.sum / stats.count;
+  stats.mean = stats.sum / stats.count;
 
-    for (int i = 0; i < arraySize; i++) {
-        if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
-            stdev += pow(telemetryArray[i].measurement - stats.mean, 2);
-        }
+  for (int i = 0; i < arraySize; i++) {
+    if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
+      stdev += pow(telemetryArray[i].measurement - stats.mean, 2);
     }
-    stats.STdev = sqrt(stdev / stats.count);
+  }
+  stats.STdev = sqrt(stdev / stats.count);
 
-    return stats;
+  return stats;
 }
 
 double meanLocationNameTime(TelemetryData *telemetryArray, int arraySize,

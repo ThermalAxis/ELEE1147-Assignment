@@ -149,16 +149,12 @@ time_t convertTimestamp(char *timestamp) {
 
   time_t epoch = mktime(&datetime);
 
-  // printf(
-  //     "Epoch: %d\nYear: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d
-  //     \nSecond: %d\n", epoch, datetime.tm_year += 1900, datetime.tm_mon += 1,
-  //     datetime.tm_mday, datetime.tm_hour, datetime.tm_min, datetime.tm_sec);
-
   return epoch;
 }
 
 time_t getStartTimestamp(TelemetryData *telemetryArray, int arraySize) {
   time_t startTimeEpoch = convertTimestamp(telemetryArray[0].timestamp);
+
   // find earliest timestamp
   for (int i = 0; i < arraySize; i++) {
     time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
@@ -171,6 +167,7 @@ time_t getStartTimestamp(TelemetryData *telemetryArray, int arraySize) {
 
 time_t getEndTimestamp(TelemetryData *telemetryArray, int arraySize) {
   time_t endTimeEpoch = 0;
+
   // find latest timestamp
   for (int i = 0; i < arraySize; i++) {
     time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
