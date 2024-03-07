@@ -1,6 +1,6 @@
-#include "weather_conditions.h"
 #include "statistics_functions.h"
 #include "telemetry_functions.h"
+#include "weather_conditions.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
