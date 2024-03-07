@@ -52,7 +52,7 @@ int main() {
       status = scanfs("%d", &choice);
     }
 #endif
-
+    
     switch (choice) {
     case 1:
       displayAllData(telemetryArray, arraySize);
@@ -72,7 +72,7 @@ int main() {
       filterBySensorID(telemetryArray, arraySize);
       break;
     case 6:
-        //filterByTimeStamp(telemetryArray, arraySize);
+
       break;
     case 7:
       statisticsFunctions(telemetryArray, arraySize);

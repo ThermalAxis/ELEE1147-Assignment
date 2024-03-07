@@ -5,36 +5,30 @@
 
 #include "json_parser.h" // YOU CAN ADD OTHER HEADERS UNDERNEATH OR ABOVE
 
+struct sensorStats {
+    double sum;
+    int count;
+    double mean;
+    double STdev;
+};
+
 int statisticsFunctions(TelemetryData *telemetryArray, int arraySize);
 
 void allStats(TelemetryData *telemetryArray, int arraySize);
 void locationStats(TelemetryData *telemetryArray, int arraySize);
 void sensorIDStats(TelemetryData *telemetryArray, int arraySize);
 
-double meanLocationName(TelemetryData *telemetryArray, int arraySize,
-                        char *sensorType, char *locationName);
 double meanLocationNameTime(TelemetryData *telemetryArray, int arraySize,
                             char *sensorType, char *locationName,
                             time_t startOffset);
 
-double sumSensorType(TelemetryData *telemetryArray, int arraySize,
-                     char *sensorType);
-int countSensorType(TelemetryData *telemetryArray, int arraySize,
-                    char *sensorType);
-double stdevSensorType(TelemetryData *telemetryArray, int arraySize,
-                       char *sensorType);
+struct sensorStats getSensorTypeStats(TelemetryData* telemetryArray, int arraySize,
+    char* sensorType);
 
-double sumLocationName(TelemetryData *telemetryArray, int arraySize,
-                       char *sensorType, char *locationName);
-int countLocationName(TelemetryData *telemetryArray, int arraySize,
-                      char *sensorType, char *locationName);
-double stdevLocationName(TelemetryData *telemetryArray, int arraySize,
-                         char *sensorType, char *locationName);
+struct sensorStats getLocationStats(TelemetryData* telemetryArray, int arraySize,
+    char* sensorType, char* locationName);
 
-double sumSensorID(TelemetryData *telemetryArray, int arraySize,
-                   char *sensorID);
-int countSensorID(TelemetryData *telemetryArray, int arraySize, char *sensorID);
-double stdevSensorID(TelemetryData *telemetryArray, int arraySize,
-                     char *sensorType);
+struct sensorStats getSensorIDStats(TelemetryData* telemetryArray, int arraySize,
+    char* sensorID);
 
 #endif
