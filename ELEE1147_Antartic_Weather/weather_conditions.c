@@ -5,10 +5,6 @@
 #include <string.h>
 #include <time.h>
 
-/*
-Yes I know that my code is messy and unoptimised.
-*/
-
 void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
 
   int weatherChoice;
