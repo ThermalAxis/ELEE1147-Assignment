@@ -1,4 +1,5 @@
 #include "statistics_functions.h"
+#include "telemetry_functions.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -228,6 +229,23 @@ double meanLocationName(TelemetryData *telemetryArray, int arraySize,
       sumLocationName(telemetryArray, arraySize, sensorType, locationName) /
       countLocationName(telemetryArray, arraySize, sensorType, locationName);
   return mean;
+}
+
+double meanLocationNameTime(TelemetryData* telemetryArray, int arraySize,
+    char* sensorType, char* locationName, time_t startOffset) {
+    double total = 0;
+    int count = 0;
+    for (int i = 0; i < arraySize; ++i) {
+        if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
+            strcmp(telemetryArray[i].location, locationName) == 0 &&
+            convertTimestamp(telemetryArray[i].timestamp) >= startOffset &&
+            convertTimestamp(telemetryArray[i].timestamp) <= (startOffset + (3600 * 6) - 1)) {
+            total += telemetryArray[i].measurement;
+            count++;
+        }
+    }
+    //printf("Mean at %s for %s between %ld and %ld is %d", locationName, sensorType, startOffset, endOffset, total / count);
+    return total/count;
 }
 
 double sumLocationName(TelemetryData *telemetryArray, int arraySize,
