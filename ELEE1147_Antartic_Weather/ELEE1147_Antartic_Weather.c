@@ -25,12 +25,11 @@ int main() {
     printf("3. Filter by Location\n");
     printf("4. Filter by Sensor Type\n");
     printf("5. Filter by Sensor ID\n");
-    printf("6. Filter by Time\n");
-    printf("7. Statistics Functions\n");
-    printf("8. Export to CSV\n");
-    printf("9. Exit\n");
+    printf("6. Statistics Functions\n");
+    printf("7. Export to CSV\n");
+    printf("8. Exit\n");
 
-    printf("\nEnter your choice (1-9): ");
+    printf("\nEnter your choice (1-8): ");
 
 #if (_MSC_VER > 1600)
 
@@ -72,22 +71,18 @@ int main() {
       filterBySensorID(telemetryArray, arraySize);
       break;
     case 6:
-      filterByTimeStamp(telemetryArray, arraySize);
-      break;
-    case 7:
       statisticsFunctions(telemetryArray, arraySize);
       break;
-    case 8:
+    case 7:
       exportCSV(telemetryArray, arraySize);
-      system("timeout /T 3 >nul");
       break;
-    case 9:
+    case 8:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");
       // Don't forget to free allocated memory if needed
       free(telemetryArray);
       return 0;
     default:
-      printf("Invalid choice. Please enter a number between 1 and 9.\n");
+      printf("Invalid choice. Please enter a number between 1 and 8.\n");
     }
   }
   return 0;
