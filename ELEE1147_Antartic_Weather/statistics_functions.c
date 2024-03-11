@@ -23,7 +23,8 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
     return;
   case 1:
     allStats(telemetryArray, arraySize);
-    system("timeout /T 30");
+    printf("\nPress any key to return to main menu...");
+    system("pause>nul");
     return 0;
   case 2:
     char locationName[34];
@@ -34,11 +35,13 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
             (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
     system("cls");
     locationStats(telemetryArray, arraySize, locationName);
-    system("timeout /T 30");
+    printf("\nPress any key to return to main menu...");
+    system("pause>nul");
     return 0;
   case 3:
     sensorIDStats(telemetryArray, arraySize);
-    system("timeout /T 30");
+    printf("\nPress any key to return to main menu...");
+    system("pause>nul");
     return 0;
   case 4:
     return 0;

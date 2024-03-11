@@ -20,16 +20,13 @@ int main() {
   while (1) {
     system("cls");
     printf("==== Telemetry Data Explorer ====\n");
-    printf("1. Display All Data\n");
-    printf("2. Weather Conditions\n");
-    printf("3. Filter by Location\n");
-    printf("4. Filter by Sensor Type\n");
-    printf("5. Filter by Sensor ID\n");
-    printf("6. Statistics Functions\n");
-    printf("7. Export to CSV\n");
-    printf("8. Exit\n");
+    printf("1 - Display data\n");
+    printf("2 - Weather Conditions\n");
+    printf("3 - Statistics Functions\n");
+    printf("4 - Export to CSV\n");
+    printf("5 - Exit\n");
 
-    printf("\nEnter your choice (1-8): ");
+    printf("\nEnter your choice (1-5): ");
 
 #if (_MSC_VER > 1600)
 
@@ -38,7 +35,7 @@ int main() {
     while (status != 1) {
       while ((garbage = getchar()) != EOF && garbage != '\n')
         ;
-      printf("Invalid input... please enter a number: ");
+      printf("Invalid input... please enter a number : ");
       status = scanf_s("%d", &choice);
     }
 
@@ -54,29 +51,18 @@ int main() {
 
     switch (choice) {
     case 1:
-      displayAllData(telemetryArray, arraySize);
-      printf("Press any key to return to main menu...");
-      system("pause>nul");
+        filterMenu(telemetryArray, arraySize);
       break;
     case 2:
       weatherConditions(telemetryArray, arraySize);
       break;
     case 3:
-      filterByLocation(telemetryArray, arraySize);
-      break;
-    case 4:
-      filterBySensorType(telemetryArray, arraySize);
-      break;
-    case 5:
-      filterBySensorID(telemetryArray, arraySize);
-      break;
-    case 6:
       statisticsFunctions(telemetryArray, arraySize);
       break;
-    case 7:
+    case 4:
       exportCSV(telemetryArray, arraySize);
       break;
-    case 8:
+    case 5:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");
       // Don't forget to free allocated memory if needed
       free(telemetryArray);

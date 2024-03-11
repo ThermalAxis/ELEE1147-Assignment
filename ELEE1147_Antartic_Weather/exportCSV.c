@@ -11,14 +11,16 @@ int exportCSV(TelemetryData *telemetryArray, int arraySize) {
   printf("2 - Filter by Location\n");
   printf("3 - Filter by Sensor Type\n");
   printf("4 - Filter by Sensor ID\n");
+  printf("5 - Main menu\n");
 
-  printf("\nEnter your choice (1-4): ");
+  printf("\nEnter your choice (1-5): ");
 
   scanf("%d", &exportFilter);
 
   switch (exportFilter) {
   default:
     printf("Invalid selection, returning to main menu.");
+    system("timeout /T 3>nul");
     return;
 
   case 1:
@@ -68,6 +70,9 @@ int exportCSV(TelemetryData *telemetryArray, int arraySize) {
 
     exportSensorID(telemetryArray, arraySize, sensorID);
     return 0;
+
+  case 5:
+      return 0;
   }
 }
 

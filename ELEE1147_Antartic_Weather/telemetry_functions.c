@@ -44,6 +44,51 @@ void filterBySensorType(TelemetryData *telemetryArray, int arraySize) {
 
 // YOUR CODE BELOW THIS LINE
 
+int filterMenu(TelemetryData* telemetryArray, int arraySize) {
+
+    int filterChoice;
+    system("cls");
+    printf("==== Display telemetry data ====\n");
+    printf("1 - Display All Data\n");
+    printf("2 - Filter data by Location\n");
+    printf("3 - Filter by Sensor Type\n");
+    printf("4 - Filter by Sensor ID\n");
+    printf("5 - Main menu\n");
+
+    printf("\nEnter your choice (1-5): ");
+
+    scanf_s("%d", &filterChoice);
+
+    switch (filterChoice) {
+    default:
+        printf("Invalid selection, returning to main menu.");
+        system("timeout /T 3>nul");
+        return 0;
+    case 1:
+        displayAllData(telemetryArray, arraySize);
+        printf("Press any key to return to main menu...");
+        system("pause>nul");
+        return 0;
+    case 2:
+        filterByLocation(telemetryArray, arraySize);
+        printf("\nPress any key to return to main menu...");
+        system("pause>nul");
+        return 0;
+    case 3:
+        filterBySensorType(telemetryArray, arraySize);
+        printf("Press any key to return to main menu...");
+        system("pause>nul");
+        return 0;
+    case 4:
+        filterBySensorID(telemetryArray, arraySize);
+        printf("\nPress any key to return to main menu...");
+        system("pause>nul");
+        return 0;
+    case 5:
+        return 0;
+    }
+}
+
 void filterBySensorID(TelemetryData *telemetryArray, int arraySize) {
   char sensorID[10];
   printf("Enter the Sensor ID to filter: ");
