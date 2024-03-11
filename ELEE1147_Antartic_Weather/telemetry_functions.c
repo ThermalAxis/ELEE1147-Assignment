@@ -53,9 +53,10 @@ int filterMenu(TelemetryData* telemetryArray, int arraySize) {
     printf("2 - Filter data by Location\n");
     printf("3 - Filter by Sensor Type\n");
     printf("4 - Filter by Sensor ID\n");
-    printf("5 - Main menu\n");
+    printf("5 - Filter by Time\n");
+    printf("6 - Main menu\n");
 
-    printf("\nEnter your choice (1-5): ");
+    printf("\nEnter your choice (1-6): ");
 
     scanf_s("%d", &filterChoice);
 
@@ -85,6 +86,9 @@ int filterMenu(TelemetryData* telemetryArray, int arraySize) {
         system("pause>nul");
         return 0;
     case 5:
+        filterByTime(telemetryArray, arraySize);
+        return 0;
+    case 6:
         return 0;
     }
 }
@@ -138,48 +142,79 @@ void filterByLocation(TelemetryData *telemetryArray, int arraySize) {
   }
 }
 
-void filterByTimeStamp(TelemetryData *telemetryArray, int arraySize) {
+int filterByTime(TelemetryData *telemetryArray, int arraySize) {
 
   struct tm startTimeSelect;
   struct tm endTimeSelect;
+  time_t startTimeEpoch;
+  time_t endTimeEpoch;
+   char startTime[20];
+   char endTime[20];
 
-  // char startTime[20];
-  // char endTime[20];
-  // printf("Enter the start timestamp to filter in the format "
-  //        "'YYYY-MM-DDTHH:MM:SSZ'\n");
-  // printf("Start time: ");
-  // scanf_s("%s", startTime, sizeof(startTime));
+   time_t startTimeDataEpoch = getStartTimestamp(telemetryArray, arraySize);
+   struct tm startTimeStampData;
+   time_t endTimeDataEpoch = getEndTimestamp(telemetryArray, arraySize);
+   struct tm endTimeStampData;
+   localtime_s(&startTimeStampData, &startTimeDataEpoch);
+   localtime_s(&endTimeStampData, &endTimeDataEpoch);
 
-  // sscanf_s(startTime, "%4d-%2d-%2dT%2d:%2d:%2d", &startTimeStamp.year,
-  //          &startTimeStamp.month, &startTimeStamp.day, &startTimeStamp.hour,
-  //          &startTimeStamp.minute, &startTimeStamp.second);
-  // sscanf_s(endTime, "%4d-%2d-%2dT%2d:%2d:%2d", &endTimeStamp.year,
-  //          &endTimeStamp.month, &endTimeStamp.day, &endTimeStamp.hour,
-  //          &endTimeStamp.minute, &endTimeStamp.second);
+   printf("Enter the start timestamp in the format "
+          "'YYYY-MM-DDTHH:MM:SS' between %04d-%02d-%02dT%02d:%02d:%02dZ & %04d-%02d-%02dT%02d:%02d:%02dZ\n",
+       startTimeStampData.tm_year += 1900,
+       startTimeStampData.tm_mon += 1, startTimeStampData.tm_mday, startTimeStampData.tm_hour,
+       startTimeStampData.tm_min, startTimeStampData.tm_sec,
+       endTimeStampData.tm_year += 1900,
+       endTimeStampData.tm_mon += 1, endTimeStampData.tm_mday, endTimeStampData.tm_hour,
+       endTimeStampData.tm_min, endTimeStampData.tm_sec);
 
-  // printf("Inut Start Time: %s\n", startTime);
-  //// printf("End: %s\n", endTime);
+   printf("Start time: ");
+   scanf_s("%s", startTime, sizeof(startTime));
 
-  // printf("Start timestamp:\n");
-  // printf(
-  //     "Year: %d \nMonth: %d \nDay: %d \nHour: %d \nMinute: %d \nSecond:
-  //     %d\n", startTimeStamp.year, startTimeStamp.month, startTimeStamp.day,
-  //     startTimeStamp.hour, startTimeStamp.minute, &startTimeStamp.second);
+   printf("Enter the end timestamp to filter in the format "
+       "'YYYY-MM-DDTHH:MM:SS'\n");
+   printf("End time: ");
+   scanf_s("%s", endTime, sizeof(endTime));
 
-  // printf("Telemetry Data for Time range '%s':\n", locationName);
-  // for (int i = 0; i < arraySize; ++i) {
-  //     if (strcmp(telemetryArray[i].location, locationName) == 0) {
-  //         printf("Timestamp: %s, SensorID: %s, SensorType: %s, Location: %s,
-  //         "
-  //             "Measurement: %.2f, "
-  //             "Status: %s\n",
-  //             telemetryArray[i].timestamp, telemetryArray[i].sensorID,
-  //             telemetryArray[i].sensorType, telemetryArray[i].location,
-  //             telemetryArray[i].measurement, telemetryArray[i].status);
-  //     }
-  // }
+   if (convertTimestamp(endTime) < startTimeDataEpoch || convertTimestamp(startTime) > endTimeDataEpoch) {
+       printf("No data available for the selected timeframe!\nReturning to the main menu.");
+       system("timeout /T 3");
+       return -1;
+   }
 
-  return;
+   sscanf_s(startTime, "%d-%d-%dT%d:%d:%d", &startTimeSelect.tm_year,
+            &startTimeSelect.tm_mon, &startTimeSelect.tm_mday, &startTimeSelect.tm_hour,
+            &startTimeSelect.tm_min, &startTimeSelect.tm_sec);
+   sscanf_s(endTime, "%d-%d-%dT%d:%d:%d", &endTimeSelect.tm_year,
+       &endTimeSelect.tm_mon, &endTimeSelect.tm_mday, &endTimeSelect.tm_hour,
+       &endTimeSelect.tm_min, &endTimeSelect.tm_sec);
+
+   startTimeSelect.tm_year -= 1900;
+   startTimeSelect.tm_mon -=  1;
+
+   endTimeSelect.tm_year -=  1900;
+   endTimeSelect.tm_mon -=  1;
+
+   startTimeEpoch = mktime(&startTimeSelect);
+   endTimeEpoch = mktime(&endTimeSelect);
+
+   printf("start epoch is: %ld\nend epoch is: %ld", startTimeEpoch, endTimeEpoch);
+
+   printf("==== Telemetry Data for Time range '%s' to '%s' ====\n\n", startTime, endTime);
+
+   for (int i = 0; i < arraySize; ++i) {
+       if (convertTimestamp(telemetryArray[i].timestamp) >= startTimeEpoch &&
+           convertTimestamp(telemetryArray[i].timestamp) <= endTimeEpoch) {
+           printf("Timestamp: %s, SensorID: %s, SensorType: %s, Location: %s,"
+               "Measurement: %.2f, "
+               "Status: %s\n",
+               telemetryArray[i].timestamp, telemetryArray[i].sensorID,
+               telemetryArray[i].sensorType, telemetryArray[i].location,
+               telemetryArray[i].measurement, telemetryArray[i].status);
+       }
+   }
+   printf("\nPress any key to return to main menu...");
+   system("pause>nul");
+  return 0;
 }
 
 time_t convertTimestamp(char *timestamp) {

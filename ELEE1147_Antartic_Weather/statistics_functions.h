@@ -26,9 +26,13 @@ double meanLocationNameTime(TelemetryData *telemetryArray, int arraySize,
 struct sensorStats getSensorTypeStats(TelemetryData *telemetryArray,
                                       int arraySize, char *sensorType);
 
+void locationTimeStats(TelemetryData* telemetryArray, int arraySize);
+
 struct sensorStats getLocationStats(TelemetryData *telemetryArray,
                                     int arraySize, char *sensorType,
                                     char *locationName);
+
+struct sensorStats getLocationTimeStats(TelemetryData* telemetryArray, int arraySize, char* sensorType, char* locationName, time_t startTimeEpoch, time_t endTimeEpoch);
 
 struct sensorStats getSensorIDStats(TelemetryData *telemetryArray,
                                     int arraySize, char *sensorID);

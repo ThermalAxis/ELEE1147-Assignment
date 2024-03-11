@@ -60,8 +60,7 @@ void filterBySensorID(TelemetryData *telemetryArray, int arraySize);
  */
 void filterByLocation(TelemetryData *telemetryArray, int arraySize);
 
-void filterByTimeStamp(TelemetryData *telemetryArray,
-                       int arraySize); // this doesn't work atm :(
+int filterByTime(TelemetryData *telemetryArray, int arraySize);
 
 time_t convertTimestamp(char *timestamp);
 
