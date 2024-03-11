@@ -35,8 +35,7 @@ void filterBySensorType(TelemetryData *telemetryArray, int arraySize);
 
 // YOUR CODE BELOW THIS LINE
 
-
-int filterMenu(TelemetryData* telemetryArray, int arraySize);
+int filterMenu(TelemetryData *telemetryArray, int arraySize);
 
 /**
  * @brief Filter telemetry data by sensor ID.

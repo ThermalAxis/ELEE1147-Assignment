@@ -51,7 +51,7 @@ int main() {
 
     switch (choice) {
     case 1:
-        filterMenu(telemetryArray, arraySize);
+      filterMenu(telemetryArray, arraySize);
       break;
     case 2:
       weatherConditions(telemetryArray, arraySize);

@@ -72,7 +72,7 @@ int exportCSV(TelemetryData *telemetryArray, int arraySize) {
     return 0;
 
   case 5:
-      return 0;
+    return 0;
   }
 }
 
