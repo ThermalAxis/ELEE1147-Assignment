@@ -105,12 +105,12 @@ void filterByTimeStamp(TelemetryData *telemetryArray, int arraySize) {
   // printf("Start time: ");
   // scanf_s("%s", startTime, sizeof(startTime));
 
-  ///* sscanf_s(startTime, "%4d-%2d-%2dT%2d:%2d:%2d", &startTimeStamp.year,
+  // sscanf_s(startTime, "%4d-%2d-%2dT%2d:%2d:%2d", &startTimeStamp.year,
   //          &startTimeStamp.month, &startTimeStamp.day, &startTimeStamp.hour,
   //          &startTimeStamp.minute, &startTimeStamp.second);
   // sscanf_s(endTime, "%4d-%2d-%2dT%2d:%2d:%2d", &endTimeStamp.year,
   //          &endTimeStamp.month, &endTimeStamp.day, &endTimeStamp.hour,
-  //          &endTimeStamp.minute, &endTimeStamp.second);*/
+  //          &endTimeStamp.minute, &endTimeStamp.second);
 
   // printf("Inut Start Time: %s\n", startTime);
   //// printf("End: %s\n", endTime);

@@ -10,4 +10,12 @@
 
 int exportCSV(TelemetryData *telemetryArray, int arraySize);
 
+int exportAll(TelemetryData *telemetryArray, int arraySize);
+int exportLocation(TelemetryData *telemetryArray, int arraySize,
+                   char *locationName);
+int exportSensorType(TelemetryData *telemetryArray, int arraySize,
+                     char *sensorType);
+int exportSensorID(TelemetryData *telemetryArray, int arraySize,
+                   char *sensorID);
+
 #endif

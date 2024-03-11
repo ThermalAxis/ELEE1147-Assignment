@@ -26,7 +26,14 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
     system("timeout /T 30");
     return 0;
   case 2:
-    locationStats(telemetryArray, arraySize);
+    char locationName[34];
+    printf("Enter the Location to filter statistics: ");
+    while (getchar() != '\n')
+      ;
+    scanf_s("%33[^\n]", locationName,
+            (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+    system("cls");
+    locationStats(telemetryArray, arraySize, locationName);
     system("timeout /T 30");
     return 0;
   case 3:
@@ -39,6 +46,12 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
 }
 
 void allStats(TelemetryData *telemetryArray, int arraySize) {
+
+  char locations[5][34] = {{"Casey Station"},
+                           {"Amundsen-Scott South Pole Station"},
+                           {"Rothera Research Station"},
+                           {"McMurdo Station"},
+                           {"Palmer Station"}};
 
   struct sensorStats windspeedStats =
       getSensorTypeStats(telemetryArray, arraySize, "WindSpeed");
@@ -55,24 +68,23 @@ void allStats(TelemetryData *telemetryArray, int arraySize) {
   printf("\n==== Statistics for all data ====\n");
   printf("\tWindspeed (km/h) Pressure (hPa)\tTemperature (C)\tVisibility "
          "(m)\tUV Index\n");
-  printf("Total:\t%.1f\t\t %.1f\t%.1f\t%.1f\t%.1f\n", windspeedStats.sum,
-         pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
-         uvRadiationStats.sum);
+  // printf("Total:\t%.1f\t\t %.1f\t%.1f\t%.1f\t%.1f\n", windspeedStats.sum,
+  //        pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
+  //        uvRadiationStats.sum);
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
          pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
          uvRadiationStats.mean);
   printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
          pressureStats.STdev, temperatureStats.STdev, visibilityStats.STdev,
          uvRadiationStats.STdev);
+
+  for (int i = 0; i < 5; i++) {
+    locationStats(telemetryArray, arraySize, locations[i]);
+  }
 }
 
-void locationStats(TelemetryData *telemetryArray, int arraySize) {
-  char locationName[34];
-  printf("Enter the Location to filter statistics: ");
-  while (getchar() != '\n')
-    ;
-  scanf_s("%33[^\n]", locationName,
-          (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
+void locationStats(TelemetryData *telemetryArray, int arraySize,
+                   char *locationName) {
 
   struct sensorStats windspeedStats =
       getLocationStats(telemetryArray, arraySize, "WindSpeed", locationName);
@@ -85,13 +97,13 @@ void locationStats(TelemetryData *telemetryArray, int arraySize) {
   struct sensorStats uvRadiationStats =
       getLocationStats(telemetryArray, arraySize, "UVRadiation", locationName);
 
-  system("cls");
+  // system("cls");
   printf("\n==== Statistics for %s ====", locationName);
   printf("\n\tWindspeed (km/h) Pressure (hPa)\tTemperature (C)\tVisibility "
          "(m)\tUV Index\n");
-  printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.sum,
-         pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
-         uvRadiationStats.sum);
+  // printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.sum,
+  //        pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
+  //        uvRadiationStats.sum);
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
          pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
          uvRadiationStats.mean);
@@ -123,7 +135,7 @@ void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
   system("cls");
   printf("==== Statistics for %s ====\n", sensorID);
   printf("\t%s\n", sensorType);
-  printf("Total:\t%.1f\n", sensorIDStats.sum);
+  // printf("Total:\t%.1f\n", sensorIDStats.sum);
   printf("Mean:\t%.1f\n", sensorIDStats.mean);
   printf("Stdev\t%.1f\n", sensorIDStats.STdev);
 }

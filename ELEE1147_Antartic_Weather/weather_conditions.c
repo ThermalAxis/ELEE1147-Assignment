@@ -69,21 +69,32 @@ void allCond(TelemetryData *telemetryArray, int arraySize) {
     hourlyConditions(telemetryArray, arraySize, locations[i], startDayEpoch,
                      endTimeEpoch);
   }
-
   return;
 }
 
 void locationCond(TelemetryData *telemetryArray, int arraySize) {
   char locationName[34];
 
+  time_t startTimeEpoch = getStartTimestamp(telemetryArray, arraySize);
+  time_t endTimeEpoch = getEndTimestamp(telemetryArray, arraySize);
+
+  struct tm startTime;
+  localtime_s(&startTime, &startTimeEpoch);
+  struct tm startTimeDay = startTime;
+  startTimeDay.tm_hour = 00;
+  startTimeDay.tm_min = 00;
+  startTimeDay.tm_sec = 00;
+  time_t startDayEpoch = mktime(&startTimeDay);
+  struct tm endTime;
+  localtime_s(&endTime, &endTimeEpoch);
+
   printf("Enter the Location to display weather conditions: ");
   while (getchar() != '\n')
     ;
   scanf_s("%33[^\n]", locationName,
           (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
-  hourlyConditions(telemetryArray, arraySize, locationName,
-                   getStartTimestamp(telemetryArray, arraySize),
-                   getEndTimestamp(telemetryArray, arraySize));
+  hourlyConditions(telemetryArray, arraySize, locationName, startDayEpoch,
+                   endTimeEpoch);
 }
 
 void timeframeLocationConditions(TelemetryData *telemetryArray, int arraySize) {
@@ -152,12 +163,12 @@ void getLocationCondTime(TelemetryData *telemetryArray, int arraySize,
   // printf("location name is: %s, start time is: %ld\n", locationName,
   // startOffset);
 
-  double windspeedMean = meanLocationNameTime(
-      telemetryArray, arraySize, "WindSpeed", locationName, startOffset);
   double pressureMean = meanLocationNameTime(
       telemetryArray, arraySize, "Pressure", locationName, startOffset);
   double temperatureMean = meanLocationNameTime(
       telemetryArray, arraySize, "Temperature", locationName, startOffset);
+  double windspeedMean = meanLocationNameTime(
+      telemetryArray, arraySize, "WindSpeed", locationName, startOffset);
   double visibilityMean = meanLocationNameTime(
       telemetryArray, arraySize, "Visibility", locationName, startOffset);
   double UVradiationMean = meanLocationNameTime(
@@ -182,7 +193,7 @@ char *getWeatherConditions(double sensorPressure, double sensorTemperature,
                            double sensorWindSpeed, double sensorVisibility,
                            double sensorUVRadiation) {
   char result[10];
-  if (sensorPressure >= 1000 && sensorPressure <= 1000 &&
+  if (sensorPressure >= 1000 && sensorPressure <= 1015 &&
       sensorTemperature >= -20 && sensorTemperature <= -1 &&
       sensorWindSpeed >= 10 && sensorWindSpeed <= 50 &&
       sensorVisibility >= 5000 && sensorVisibility <= 10000 &&

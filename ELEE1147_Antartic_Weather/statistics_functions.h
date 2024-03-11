@@ -15,7 +15,8 @@ struct sensorStats {
 int statisticsFunctions(TelemetryData *telemetryArray, int arraySize);
 
 void allStats(TelemetryData *telemetryArray, int arraySize);
-void locationStats(TelemetryData *telemetryArray, int arraySize);
+void locationStats(TelemetryData *telemetryArray, int arraySize,
+                   char *locationName);
 void sensorIDStats(TelemetryData *telemetryArray, int arraySize);
 
 double meanLocationNameTime(TelemetryData *telemetryArray, int arraySize,
