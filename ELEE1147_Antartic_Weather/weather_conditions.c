@@ -12,11 +12,11 @@ void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
   printf("==== Weather conditions for telemetry data ====\n");
   printf("1 - Display hourly weather conditions for all locations\n");
   printf("2 - Display hourly weather conditions by location\n");
-  // printf("3 - Display weather conditions for a specific timeframe and
-  // location\n");
-  printf("3 - Main menu\n");
+  printf("3 - Display hourly weather conditions for a specific timeframe and "
+         "location\n");
+  printf("4 - Main menu\n");
 
-  printf("\nEnter your choice (1-3): ");
+  printf("\nEnter your choice (1-4): ");
 
   scanf_s("%d", &weatherChoice);
 
@@ -34,13 +34,15 @@ void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
   case 2:
     system("cls");
     locationCond(telemetryArray, arraySize);
+    printf("\nPress any key to return to main menu...");
     system("pause>nul");
     return 0;
-    /* case 3:
-         timeframeLocationConditions(telemetryArray, arraySize);
-         system("pause>nul");
-       return 0;*/
   case 3:
+    timeframeLocationConditions(telemetryArray, arraySize);
+    printf("\nPress any key to return to main menu...");
+    system("pause>nul");
+    return 0;
+  case 4:
     return 0;
   }
 }
@@ -98,36 +100,77 @@ void locationCond(TelemetryData *telemetryArray, int arraySize) {
 }
 
 void timeframeLocationConditions(TelemetryData *telemetryArray, int arraySize) {
-  char locationName[34], startTimeStr[20], endTimeStr[20];
-  time_t startTimeSelect;
-  time_t endTimeSelect;
-  printf("Enter the location to display weather conditions: ");
+  char locationName[34];
+
+  printf("Enter the Location to display weather conditions: ");
   while (getchar() != '\n')
     ;
   scanf_s("%33[^\n]", locationName,
           (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
 
-  printf("Enter the start timestamp to filter in the format "
-         "'YYYY-MM-DDTHH:MM:SSZ'\n");
+  struct tm startTimeSelect;
+  struct tm endTimeSelect;
+  time_t startTimeEpoch;
+  time_t endTimeEpoch;
+  char startTime[20];
+  char endTime[20];
+
+  time_t startTimeDataEpoch = getStartTimestamp(telemetryArray, arraySize);
+  struct tm startTimeStampData;
+  time_t endTimeDataEpoch = getEndTimestamp(telemetryArray, arraySize);
+  struct tm endTimeStampData;
+  localtime_s(&startTimeStampData, &startTimeDataEpoch);
+  localtime_s(&endTimeStampData, &endTimeDataEpoch);
+
+  printf("Enter the start timestamp in the format "
+         "'YYYY-MM-DDTHH:MM:SS' between %04d-%02d-%02dT%02d:%02d:%02dZ & "
+         "%04d-%02d-%02dT%02d:%02d:%02dZ\n",
+         startTimeStampData.tm_year += 1900, startTimeStampData.tm_mon += 1,
+         startTimeStampData.tm_mday, startTimeStampData.tm_hour,
+         startTimeStampData.tm_min, startTimeStampData.tm_sec,
+         endTimeStampData.tm_year += 1900, endTimeStampData.tm_mon += 1,
+         endTimeStampData.tm_mday, endTimeStampData.tm_hour,
+         endTimeStampData.tm_min, endTimeStampData.tm_sec);
+
   printf("Start time: ");
-  scanf_s("%s", startTimeStr, sizeof(startTimeStr));
-  startTimeSelect = convertTimestamp(startTimeStr);
+  scanf_s("%s", startTime, sizeof(startTime));
 
   printf("Enter the end timestamp to filter in the format "
-         "'YYYY-MM-DDTHH:MM:SSZ'\n");
+         "'YYYY-MM-DDTHH:MM:SS'\n");
   printf("End time: ");
-  scanf_s("%s", endTimeStr, sizeof(endTimeStr));
-  endTimeSelect = convertTimestamp(endTimeStr);
+  scanf_s("%s", endTime, sizeof(endTime));
 
-  if (endTimeSelect < startTimeSelect) {
-    printf("End date cannot be before start date!");
+  if (convertTimestamp(endTime) < startTimeDataEpoch ||
+      convertTimestamp(startTime) > endTimeDataEpoch) {
+    printf("No data available for the selected timeframe!\nReturning to the "
+           "main menu.");
+    system("timeout /T 3");
+    return -1;
   }
 
-  printf("locationName = %s, startTimeSelect = %ld, endtimeSelect = %ls",
-         locationName, startTimeSelect, endTimeSelect);
+  sscanf_s(startTime, "%d-%d-%dT%d:%d:%d", &startTimeSelect.tm_year,
+           &startTimeSelect.tm_mon, &startTimeSelect.tm_mday,
+           &startTimeSelect.tm_hour, &startTimeSelect.tm_min,
+           &startTimeSelect.tm_sec);
+  sscanf_s(endTime, "%d-%d-%dT%d:%d:%d", &endTimeSelect.tm_year,
+           &endTimeSelect.tm_mon, &endTimeSelect.tm_mday,
+           &endTimeSelect.tm_hour, &endTimeSelect.tm_min,
+           &endTimeSelect.tm_sec);
 
-  hourlyConditions(telemetryArray, arraySize, locationName, startTimeSelect,
-                   endTimeSelect);
+  startTimeSelect.tm_year -= 1900;
+  startTimeSelect.tm_mon -= 1;
+
+  endTimeSelect.tm_year -= 1900;
+  endTimeSelect.tm_mon -= 1;
+
+  startTimeEpoch = mktime(&startTimeSelect);
+  endTimeEpoch = mktime(&endTimeSelect);
+
+  // printf("start epoch is: %ld\nend epoch is: %ld\n", startTimeEpoch,
+  // endTimeEpoch);
+
+  hourlyConditions(telemetryArray, arraySize, locationName, startTimeEpoch,
+                   endTimeEpoch);
 }
 
 void hourlyConditions(TelemetryData *telemetryArray, int arraySize,
