@@ -50,16 +50,17 @@ int main() {
 
     switch (choice) {
     case 1:
-      filterMenu(telemetryArray, arraySize);  // access filter menu
+      filterMenu(telemetryArray, arraySize); // access filter menu
       break;
     case 2:
-      weatherConditions(telemetryArray, arraySize);  // access weather conditions menu
+      weatherConditions(telemetryArray,
+                        arraySize); // access weather conditions menu
       break;
     case 3:
-      statisticsFunctions(telemetryArray, arraySize);  // access stats menu
+      statisticsFunctions(telemetryArray, arraySize); // access stats menu
       break;
     case 4:
-      exportCSV(telemetryArray, arraySize);  // access export csv menu
+      exportCSV(telemetryArray, arraySize); // access export csv menu
       break;
     case 5:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");

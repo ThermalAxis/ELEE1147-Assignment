@@ -31,12 +31,15 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
   case 2:
     char locationName[34];
     printf("Enter the Location to filter statistics: ");
-    while (getchar() != '\n');
+    while (getchar() != '\n')
+      ;
     // get location name from user
     scanf_s("%33[^\n]", locationName,
             (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
     system("cls");
-    locationStats(telemetryArray, arraySize, locationName); // call location stats functions with location argument
+    locationStats(
+        telemetryArray, arraySize,
+        locationName); // call location stats functions with location argument
     printf("\nPress any key to return to main menu...");
     system("pause>nul");
     return 0;
@@ -46,7 +49,8 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
     system("pause>nul");
     return 0;
   case 4:
-    locationTimeStats(telemetryArray, arraySize); // call locationTime stats function
+    locationTimeStats(telemetryArray,
+                      arraySize); // call locationTime stats function
     printf("\nPress any key to return to main menu...");
     system("pause>nul");
     return 0;
@@ -57,7 +61,7 @@ int statisticsFunctions(TelemetryData *telemetryArray, int arraySize) {
 
 void allStats(TelemetryData *telemetryArray, int arraySize) {
 
-    // define locations
+  // define locations
   char locations[5][34] = {{"Casey Station"},
                            {"Amundsen-Scott South Pole Station"},
                            {"Rothera Research Station"},
@@ -91,14 +95,15 @@ void allStats(TelemetryData *telemetryArray, int arraySize) {
          visibilityStats.STdev, uvRadiationStats.STdev);
 
   for (int i = 0; i < 5; i++) {
-    locationStats(telemetryArray, arraySize, locations[i]); // cycle through locations
+    locationStats(telemetryArray, arraySize,
+                  locations[i]); // cycle through locations
   }
 }
 
 void locationStats(TelemetryData *telemetryArray, int arraySize,
                    char *locationName) {
 
-    // get stats structs for location passes into the function
+  // get stats structs for location passes into the function
   struct sensorStats windspeedStats =
       getLocationStats(telemetryArray, arraySize, "WindSpeed", locationName);
   struct sensorStats pressureStats =
@@ -161,7 +166,7 @@ void locationTimeStats(TelemetryData *telemetryArray, int arraySize) {
     ;
   scanf_s("%33[^\n]", locationName,
           (unsigned)(sizeof(locationName) / sizeof(locationName[0])));
-  
+
   // define time structures & input strings
   struct tm startTimeSelect;
   struct tm endTimeSelect;

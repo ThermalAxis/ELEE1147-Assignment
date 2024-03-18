@@ -4,7 +4,7 @@
 
 int exportCSV(TelemetryData *telemetryArray, int arraySize) {
 
-// export menu
+  // export menu
 
   int exportFilter;
   system("cls"); // clear the terminal
