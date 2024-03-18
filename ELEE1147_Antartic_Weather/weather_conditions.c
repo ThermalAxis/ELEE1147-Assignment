@@ -187,6 +187,7 @@ void hourlyConditions(TelemetryData *telemetryArray, int arraySize,
       startDayEpochOffset = startDayEpochOffset + (3600 * 1);
       endDayEpochOffset = startDayEpochOffset + ((3600 * 1) - 1);
     }
+    printf("----------------------------\n");
   }
   // printf("\n");
 }
