@@ -1,9 +1,11 @@
+
 #include "statistics_functions.h"
 #include "telemetry_functions.h"
 #include "weather_conditions.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 void weatherConditions(TelemetryData *telemetryArray, int arraySize) {
 
@@ -218,11 +220,11 @@ void getLocationCondTime(TelemetryData *telemetryArray, int arraySize,
   double UVradiationMean = meanLocationNameTime(
       telemetryArray, arraySize, "UVRadiation", locationName, startOffset);
 
-  printf("Pressure: %.2f\n", pressureMean);
-  printf("Temperature: %.2f\n", temperatureMean);
-  printf("WindSpeed: %.2f\n", windspeedMean);
-  printf("Visibility: %.2f\n", visibilityMean);
-  printf("UV Index: %.2f\n", UVradiationMean);
+  //printf("Pressure: %.2f\n", pressureMean);
+  //printf("Temperature: %.2f\n", temperatureMean);
+  //printf("WindSpeed: %.2f\n", windspeedMean);
+  //printf("Visibility: %.2f\n", visibilityMean);
+  //printf("UV Index: %.2f\n", UVradiationMean);
 
   strcpy(weatherConditions,
          getWeatherConditions(pressureMean, temperatureMean, windspeedMean,
@@ -272,9 +274,9 @@ char *getWeatherConditions(double sensorPressure, double sensorTemperature,
     strcpy(result, "Snowing");
     // printf("Snowing\n");
   }
-  else if ((sscanf("%f", &sensorPressure) == 0) || (sscanf("%f", &sensorTemperature) == 0) ||
-      (sscanf("%f", &sensorWindSpeed) == 0) || (sscanf("%f", &sensorVisibility) == 0) ||
-      (sscanf("%f", &sensorUVRadiation) == 0)) {
+  else if (isnan(sensorPressure) || isnan(sensorTemperature) ||
+      isnan(sensorWindSpeed) || isnan(sensorVisibility) ||
+      isnan(sensorUVRadiation)) {
       strcpy(result, "No Data");
   } else {
     strcpy(result, "Unknown");

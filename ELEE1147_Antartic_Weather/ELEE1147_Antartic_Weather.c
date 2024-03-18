@@ -61,6 +61,7 @@ int main() {
       break;
     case 4:
       exportCSV(telemetryArray, arraySize);
+      system("timeout /T 3>nul");
       break;
     case 5:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");

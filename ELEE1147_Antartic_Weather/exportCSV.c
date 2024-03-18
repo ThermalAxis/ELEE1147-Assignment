@@ -25,6 +25,7 @@ int exportCSV(TelemetryData *telemetryArray, int arraySize) {
 
   case 1:
     exportAll(telemetryArray, arraySize);
+    system("timeout /T 3>nul");
     return 0;
 
   case 2:
@@ -40,6 +41,7 @@ int exportCSV(TelemetryData *telemetryArray, int arraySize) {
     scanf("%33[^\n]", locationName);
 #endif
     exportLocation(telemetryArray, arraySize, locationName);
+    system("timeout /T 3>nul");
     return 0;
 
   case 3:
@@ -54,6 +56,7 @@ int exportCSV(TelemetryData *telemetryArray, int arraySize) {
     scanf("%19s", sensorType);
 #endif
     exportSensorType(telemetryArray, arraySize, sensorType);
+    system("timeout /T 3>nul");
     return 0;
 
   case 4:
@@ -69,6 +72,7 @@ int exportCSV(TelemetryData *telemetryArray, int arraySize) {
 #endif
 
     exportSensorID(telemetryArray, arraySize, sensorID);
+    system("timeout /T 3>nul");
     return 0;
 
   case 5:
@@ -106,7 +110,6 @@ int exportAll(TelemetryData *telemetryArray, int arraySize) {
   printf("CSV file export successful!\n\n");
   printf("Opening file...");
   system("start export.csv");
-  system("timeout /T 3 >nul");
   return 0;
 }
 

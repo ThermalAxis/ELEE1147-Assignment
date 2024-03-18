@@ -84,7 +84,7 @@ void allStats(TelemetryData *telemetryArray, int arraySize) {
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
          pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
          uvRadiationStats.mean);
-  printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
+  printf("Stdev:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
          pressureStats.STdev, temperatureStats.STdev, visibilityStats.STdev,
          uvRadiationStats.STdev);
 
@@ -117,7 +117,7 @@ void locationStats(TelemetryData *telemetryArray, int arraySize,
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
          pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
          uvRadiationStats.mean);
-  printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
+  printf("Stdev:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
          pressureStats.STdev, temperatureStats.STdev, visibilityStats.STdev,
          uvRadiationStats.STdev);
 }
@@ -247,7 +247,7 @@ void locationTimeStats(TelemetryData *telemetryArray, int arraySize) {
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
          pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
          uvRadiationStats.mean);
-  printf("Stdev\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
+  printf("Stdev:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.STdev,
          pressureStats.STdev, temperatureStats.STdev, visibilityStats.STdev,
          uvRadiationStats.STdev);
 }
