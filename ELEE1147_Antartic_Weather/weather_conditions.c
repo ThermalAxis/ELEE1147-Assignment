@@ -218,6 +218,12 @@ void getLocationCondTime(TelemetryData *telemetryArray, int arraySize,
   double UVradiationMean = meanLocationNameTime(
       telemetryArray, arraySize, "UVRadiation", locationName, startOffset);
 
+  printf("Pressure: %.2f\n", pressureMean);
+  printf("Temperature: %.2f\n", temperatureMean);
+  printf("WindSpeed: %.2f\n", windspeedMean);
+  printf("Visibility: %.2f\n", visibilityMean);
+  printf("UV Index: %.2f\n", UVradiationMean);
+
   strcpy(weatherConditions,
          getWeatherConditions(pressureMean, temperatureMean, windspeedMean,
                               visibilityMean, UVradiationMean));
@@ -265,6 +271,11 @@ char *getWeatherConditions(double sensorPressure, double sensorTemperature,
              sensorUVRadiation >= 1 && sensorUVRadiation <= 3) {
     strcpy(result, "Snowing");
     // printf("Snowing\n");
+  }
+  else if ((sscanf("%f", &sensorPressure) == 0) || (sscanf("%f", &sensorTemperature) == 0) ||
+      (sscanf("%f", &sensorWindSpeed) == 0) || (sscanf("%f", &sensorVisibility) == 0) ||
+      (sscanf("%f", &sensorUVRadiation) == 0)) {
+      strcpy(result, "No Data");
   } else {
     strcpy(result, "Unknown");
     // printf("Unknown\n");
