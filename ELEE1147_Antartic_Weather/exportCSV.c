@@ -4,6 +4,8 @@
 
 int exportCSV(TelemetryData *telemetryArray, int arraySize) {
 
+// export menu
+
   int exportFilter;
   system("cls"); // clear the terminal
   printf("==== Filter telemetry data for CSV export ====\n");

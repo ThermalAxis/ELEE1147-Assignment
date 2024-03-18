@@ -3,7 +3,6 @@
 #include "statistics_functions.h"
 #include "telemetry_functions.h"
 #include "weather_conditions.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -51,16 +50,16 @@ int main() {
 
     switch (choice) {
     case 1:
-      filterMenu(telemetryArray, arraySize);
+      filterMenu(telemetryArray, arraySize);  // access filter menu
       break;
     case 2:
-      weatherConditions(telemetryArray, arraySize);
+      weatherConditions(telemetryArray, arraySize);  // access weather conditions menu
       break;
     case 3:
-      statisticsFunctions(telemetryArray, arraySize);
+      statisticsFunctions(telemetryArray, arraySize);  // access stats menu
       break;
     case 4:
-      exportCSV(telemetryArray, arraySize);
+      exportCSV(telemetryArray, arraySize);  // access export csv menu
       break;
     case 5:
       printf("Exiting Telemetry Data Explorer. Goodbye!\n");
