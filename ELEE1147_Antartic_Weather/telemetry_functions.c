@@ -245,7 +245,7 @@ time_t getStartTimestamp(TelemetryData *telemetryArray, int arraySize) {
   // find earliest timestamp
   for (int i = 0; i < arraySize; i++) {
     time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
-    if (difftime(currentEpoch, startTimeEpoch) < 0) {
+    if (currentEpoch < startTimeEpoch) {
       startTimeEpoch = currentEpoch;
     }
   }
@@ -258,7 +258,7 @@ time_t getEndTimestamp(TelemetryData *telemetryArray, int arraySize) {
   // find latest timestamp
   for (int i = 0; i < arraySize; i++) {
     time_t currentEpoch = convertTimestamp(telemetryArray[i].timestamp);
-    if (difftime(currentEpoch, endTimeEpoch) > 0) {
+    if (currentEpoch > endTimeEpoch) {
       endTimeEpoch = currentEpoch;
     }
   }
