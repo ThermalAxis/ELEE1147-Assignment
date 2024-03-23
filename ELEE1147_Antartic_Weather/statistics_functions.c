@@ -87,16 +87,16 @@ void allStats(TelemetryData *telemetryArray, int arraySize) {
   // printf("Total:\t%.1f\t\t %.1f\t%.1f\t%.1f\t%.1f\n", windspeedStats.sum,
   //        pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
   //        uvRadiationStats.sum);
-  
-  printf("Max:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.max, pressureStats.max, temperatureStats.max,
-      visibilityStats.max, uvRadiationStats.max);
-  printf("Min:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.min, pressureStats.min, temperatureStats.min,
-      visibilityStats.min, uvRadiationStats.min);
+
+  printf("Max:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.max,
+         pressureStats.max, temperatureStats.max, visibilityStats.max,
+         uvRadiationStats.max);
+  printf("Min:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.min,
+         pressureStats.min, temperatureStats.min, visibilityStats.min,
+         uvRadiationStats.min);
   printf("Range:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.range, pressureStats.range, temperatureStats.range,
-      visibilityStats.range, uvRadiationStats.range);
+         windspeedStats.range, pressureStats.range, temperatureStats.range,
+         visibilityStats.range, uvRadiationStats.range);
 
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
          pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
@@ -133,22 +133,22 @@ void locationStats(TelemetryData *telemetryArray, int arraySize,
   // printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.sum,
   //        pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
   //        uvRadiationStats.sum);
-  printf("Max:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.max, pressureStats.max, temperatureStats.max,
-      visibilityStats.max, uvRadiationStats.max);
-  printf("Min:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.min, pressureStats.min, temperatureStats.min,
-      visibilityStats.min, uvRadiationStats.min);
+  printf("Max:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.max,
+         pressureStats.max, temperatureStats.max, visibilityStats.max,
+         uvRadiationStats.max);
+  printf("Min:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.min,
+         pressureStats.min, temperatureStats.min, visibilityStats.min,
+         uvRadiationStats.min);
   printf("Range:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.range, pressureStats.range, temperatureStats.range,
-      visibilityStats.range, uvRadiationStats.range);
+         windspeedStats.range, pressureStats.range, temperatureStats.range,
+         visibilityStats.range, uvRadiationStats.range);
 
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
-      pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
-      uvRadiationStats.mean);
+         pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
+         uvRadiationStats.mean);
   printf("Stdev:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.STdev, pressureStats.STdev, temperatureStats.STdev,
-      visibilityStats.STdev, uvRadiationStats.STdev);
+         windspeedStats.STdev, pressureStats.STdev, temperatureStats.STdev,
+         visibilityStats.STdev, uvRadiationStats.STdev);
 }
 
 void sensorIDStats(TelemetryData *telemetryArray, int arraySize) {
@@ -277,22 +277,22 @@ void locationTimeStats(TelemetryData *telemetryArray, int arraySize) {
   // printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.sum,
   //        pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
   //        uvRadiationStats.sum);
-  printf("Max:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.max, pressureStats.max, temperatureStats.max,
-      visibilityStats.max, uvRadiationStats.max);
-  printf("Min:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.min, pressureStats.min, temperatureStats.min,
-      visibilityStats.min, uvRadiationStats.min);
+  printf("Max:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.max,
+         pressureStats.max, temperatureStats.max, visibilityStats.max,
+         uvRadiationStats.max);
+  printf("Min:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.min,
+         pressureStats.min, temperatureStats.min, visibilityStats.min,
+         uvRadiationStats.min);
   printf("Range:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.range, pressureStats.range, temperatureStats.range,
-      visibilityStats.range, uvRadiationStats.range);
+         windspeedStats.range, pressureStats.range, temperatureStats.range,
+         visibilityStats.range, uvRadiationStats.range);
 
   printf("Mean:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.mean,
-      pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
-      uvRadiationStats.mean);
+         pressureStats.mean, temperatureStats.mean, visibilityStats.mean,
+         uvRadiationStats.mean);
   printf("Stdev:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n",
-      windspeedStats.STdev, pressureStats.STdev, temperatureStats.STdev,
-      visibilityStats.STdev, uvRadiationStats.STdev);
+         windspeedStats.STdev, pressureStats.STdev, temperatureStats.STdev,
+         visibilityStats.STdev, uvRadiationStats.STdev);
 }
 
 struct sensorStats getLocationStats(TelemetryData *telemetryArray,
@@ -314,10 +314,9 @@ struct sensorStats getLocationStats(TelemetryData *telemetryArray,
       stats.count++;
 
       if (telemetryArray[i].measurement > stats.max) {
-          stats.max = telemetryArray[i].measurement;
-      }
-      else if (telemetryArray[i].measurement < stats.min) {
-          stats.min = telemetryArray[i].measurement;
+        stats.max = telemetryArray[i].measurement;
+      } else if (telemetryArray[i].measurement < stats.min) {
+        stats.min = telemetryArray[i].measurement;
       }
     }
   }
@@ -325,7 +324,8 @@ struct sensorStats getLocationStats(TelemetryData *telemetryArray,
   stats.mean = stats.sum / stats.count;
   stats.range = stats.max - stats.min;
 
-  //printf("location: %s - SensorType: %s min: %.2f max: %.2f range: %.2f\n",locationName,sensorType, stats.min, stats.max, stats.range);
+  // printf("location: %s - SensorType: %s min: %.2f max: %.2f range:
+  // %.2f\n",locationName,sensorType, stats.min, stats.max, stats.range);
 
   for (int i = 0; i < arraySize; i++) {
     if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
@@ -361,10 +361,9 @@ struct sensorStats getLocationTimeStats(TelemetryData *telemetryArray,
       stats.count++;
 
       if (telemetryArray[i].measurement > stats.max) {
-          stats.max = telemetryArray[i].measurement;
-      }
-      else if (telemetryArray[i].measurement < stats.min) {
-          stats.min = telemetryArray[i].measurement;
+        stats.max = telemetryArray[i].measurement;
+      } else if (telemetryArray[i].measurement < stats.min) {
+        stats.min = telemetryArray[i].measurement;
       }
     }
   }
@@ -401,10 +400,9 @@ struct sensorStats getSensorTypeStats(TelemetryData *telemetryArray,
       stats.sum += telemetryArray[i].measurement;
       stats.count++;
       if (telemetryArray[i].measurement > stats.max) {
-          stats.max = telemetryArray[i].measurement;
-      }
-      else if (telemetryArray[i].measurement < stats.min) {
-          stats.min = telemetryArray[i].measurement;
+        stats.max = telemetryArray[i].measurement;
+      } else if (telemetryArray[i].measurement < stats.min) {
+        stats.min = telemetryArray[i].measurement;
       }
     }
   }
@@ -438,10 +436,9 @@ struct sensorStats getSensorIDStats(TelemetryData *telemetryArray,
       stats.sum += telemetryArray[i].measurement;
       stats.count++;
       if (telemetryArray[i].measurement > stats.max) {
-          stats.max = telemetryArray[i].measurement;
-      }
-      else if (telemetryArray[i].measurement < stats.min) {
-          stats.min = telemetryArray[i].measurement;
+        stats.max = telemetryArray[i].measurement;
+      } else if (telemetryArray[i].measurement < stats.min) {
+        stats.min = telemetryArray[i].measurement;
       }
     }
   }
