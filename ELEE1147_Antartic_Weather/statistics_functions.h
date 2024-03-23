@@ -10,6 +10,9 @@ struct sensorStats {
   int count;
   double mean;
   double STdev;
+  double min;
+  double max;
+  double range;
 };
 
 int statisticsFunctions(TelemetryData *telemetryArray, int arraySize);
