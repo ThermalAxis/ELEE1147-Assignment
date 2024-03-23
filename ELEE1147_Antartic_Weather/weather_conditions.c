@@ -68,7 +68,7 @@ void allCond(TelemetryData *telemetryArray, int arraySize) {
   struct tm endTime;
   localtime_s(&endTime, &endTimeEpoch);
 
-  //printf("startEpoch %ld endEpoch %ld", startTimeEpoch, endTimeEpoch);
+  // printf("startEpoch %ld endEpoch %ld", startTimeEpoch, endTimeEpoch);
 
   for (int i = 0; i < 5; i++) {
     hourlyConditions(telemetryArray, arraySize, locations[i], startDayEpoch,
