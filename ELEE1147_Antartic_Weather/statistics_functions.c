@@ -130,9 +130,7 @@ void locationStats(TelemetryData *telemetryArray, int arraySize,
   printf("\n==== Statistics for %s ====", locationName);
   printf("\n\tWindspeed (km/h) Pressure (hPa)\tTemperature (C)\tVisibility "
          "(m)\tUV Index\n");
-  // printf("Total:\t%.1f\t\t %.1f\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.sum,
-  //        pressureStats.sum, temperatureStats.sum, visibilityStats.sum,
-  //        uvRadiationStats.sum);
+
   printf("Max:\t%.1f\t\t %.1f\t\t%.1f\t\t%.1f\t\t%.1f\n", windspeedStats.max,
          pressureStats.max, temperatureStats.max, visibilityStats.max,
          uvRadiationStats.max);
@@ -310,9 +308,12 @@ struct sensorStats getLocationStats(TelemetryData *telemetryArray,
   for (int i = 0; i < arraySize; ++i) {
     if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
         strcmp(telemetryArray[i].location, locationName) == 0) {
-      stats.sum += telemetryArray[i].measurement;
-      stats.count++;
+      stats.sum +=
+          telemetryArray[i].measurement; // add all matching data values up
+      stats.count++; // increment to get the number of matching values
 
+      // compare whether the current element in the telemetry array is greater
+      // or lesser than the max or min values and set them if required
       if (telemetryArray[i].measurement > stats.max) {
         stats.max = telemetryArray[i].measurement;
       } else if (telemetryArray[i].measurement < stats.min) {
@@ -321,12 +322,22 @@ struct sensorStats getLocationStats(TelemetryData *telemetryArray,
     }
   }
 
-  stats.mean = stats.sum / stats.count;
-  stats.range = stats.max - stats.min;
+  stats.mean = stats.sum / stats.count; // calculate the mean
+  // calculating the mean is useful as it gives the user an average value for
+  // the data selection
+
+  stats.range = stats.max - stats.min; // calculate the range
+  // calculating the range, min & max is useful as it allows the user to see the
+  // extents that the data reaches
 
   // printf("location: %s - SensorType: %s min: %.2f max: %.2f range:
   // %.2f\n",locationName,sensorType, stats.min, stats.max, stats.range);
 
+  // calculate the standard deviation
+
+  // the standard deviation is useful as it allows the user to calculate the
+  // probability of a specific value or range of values occuring, it also
+  // includes outliers so can be used to determine the probability of an outlier
   for (int i = 0; i < arraySize; i++) {
     if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
         strcmp(telemetryArray[i].location, locationName) == 0) {
@@ -357,9 +368,12 @@ struct sensorStats getLocationTimeStats(TelemetryData *telemetryArray,
         strcmp(telemetryArray[i].location, locationName) == 0 &&
         convertTimestamp(telemetryArray[i].timestamp) >= startTimeEpoch &&
         convertTimestamp(telemetryArray[i].timestamp) <= endTimeEpoch) {
-      stats.sum += telemetryArray[i].measurement;
-      stats.count++;
+      stats.sum +=
+          telemetryArray[i].measurement; // add all matching data values up
+      stats.count++; // increment to get the number of matching values
 
+      // compare whether the current element in the telemetry array is greater
+      // or lesser than the max or min values and set them if required
       if (telemetryArray[i].measurement > stats.max) {
         stats.max = telemetryArray[i].measurement;
       } else if (telemetryArray[i].measurement < stats.min) {
@@ -368,9 +382,19 @@ struct sensorStats getLocationTimeStats(TelemetryData *telemetryArray,
     }
   }
 
-  stats.mean = stats.sum / stats.count;
-  stats.range = stats.max - stats.min;
+  stats.mean = stats.sum / stats.count; // calculate the mean
+  // calculating the mean is useful as it gives the user an average value for
+  // the data selection
 
+  stats.range = stats.max - stats.min; // calculate the range
+  // calculating the range, min & max is useful as it allows the user to see the
+  // extents that the data reaches
+
+  // calculate the standard deviation
+
+  // the standard deviation is useful as it allows the user to calculate the
+  // probability of a specific value or range of values occuring, it also
+  // includes outliers so can be used to determine the probability of an outlier
   for (int i = 0; i < arraySize; i++) {
     if (strcmp(telemetryArray[i].sensorType, sensorType) == 0 &&
         strcmp(telemetryArray[i].location, locationName) == 0 &&
@@ -397,8 +421,12 @@ struct sensorStats getSensorTypeStats(TelemetryData *telemetryArray,
 
   for (int i = 0; i < arraySize; ++i) {
     if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
-      stats.sum += telemetryArray[i].measurement;
-      stats.count++;
+      stats.sum +=
+          telemetryArray[i].measurement; // add all matching data values up
+      stats.count++; // increment to get the number of matching values
+
+      // compare whether the current element in the telemetry array is greater
+      // or lesser than the max or min values and set them if required
       if (telemetryArray[i].measurement > stats.max) {
         stats.max = telemetryArray[i].measurement;
       } else if (telemetryArray[i].measurement < stats.min) {
@@ -407,9 +435,19 @@ struct sensorStats getSensorTypeStats(TelemetryData *telemetryArray,
     }
   }
 
-  stats.mean = stats.sum / stats.count;
-  stats.range = stats.max - stats.min;
+  stats.mean = stats.sum / stats.count; // calculate the mean
+  // calculating the mean is useful as it gives the user an average value for
+  // the data selection
 
+  stats.range = stats.max - stats.min; // calculate the range
+  // calculating the range, min & max is useful as it allows the user to see the
+  // extents that the data reaches
+
+  // calculate the standard deviation
+
+  // the standard deviation is useful as it allows the user to calculate the
+  // probability of a specific value or range of values occuring, it also
+  // includes outliers so can be used to determine the probability of an outlier
   for (int i = 0; i < arraySize; i++) {
     if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
       stdev += pow(telemetryArray[i].measurement - stats.mean, 2);
@@ -433,8 +471,12 @@ struct sensorStats getSensorIDStats(TelemetryData *telemetryArray,
 
   for (int i = 0; i < arraySize; ++i) {
     if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
-      stats.sum += telemetryArray[i].measurement;
-      stats.count++;
+      stats.sum +=
+          telemetryArray[i].measurement; // add all matching data values up
+      stats.count++; // increment to get the number of matching values
+
+      // compare whether the current element in the telemetry array is greater
+      // or lesser than the max or min values and set them if required
       if (telemetryArray[i].measurement > stats.max) {
         stats.max = telemetryArray[i].measurement;
       } else if (telemetryArray[i].measurement < stats.min) {
@@ -443,9 +485,19 @@ struct sensorStats getSensorIDStats(TelemetryData *telemetryArray,
     }
   }
 
-  stats.mean = stats.sum / stats.count;
-  stats.range = stats.max - stats.min;
+  stats.mean = stats.sum / stats.count; // calculate the mean
+  // calculating the mean is useful as it gives the user an average value for
+  // the data selection
 
+  stats.range = stats.max - stats.min; // calculate the range
+  // calculating the range, min & max is useful as it allows the user to see the
+  // extents that the data reaches
+
+  // calculate the standard deviation
+
+  // the standard deviation is useful as it allows the user to calculate the
+  // probability of a specific value or range of values occuring, it also
+  // includes outliers so can be used to determine the probability of an outlier
   for (int i = 0; i < arraySize; i++) {
     if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
       stdev += pow(telemetryArray[i].measurement - stats.mean, 2);
@@ -459,6 +511,9 @@ struct sensorStats getSensorIDStats(TelemetryData *telemetryArray,
 double meanLocationNameTime(TelemetryData *telemetryArray, int arraySize,
                             char *sensorType, char *locationName,
                             time_t startOffset) {
+
+  // calculate the mean for a specific location and time
+
   double total = 0;
   int count = 0;
   for (int i = 0; i < arraySize; ++i) {
@@ -467,11 +522,12 @@ double meanLocationNameTime(TelemetryData *telemetryArray, int arraySize,
         convertTimestamp(telemetryArray[i].timestamp) >= startOffset &&
         convertTimestamp(telemetryArray[i].timestamp) <=
             (startOffset + (3600 * 6) - 1)) {
-      total += telemetryArray[i].measurement;
-      count++;
+      total += telemetryArray[i].measurement; // add all matching data values up
+      count++; // increment to get the number of matching values
     }
   }
   // printf("Mean at %s for %s between %ld and %ld is %d", locationName,
   // sensorType, startOffset, endOffset, total / count);
-  return total / count;
+
+  return total / count; // calculate the mean
 }

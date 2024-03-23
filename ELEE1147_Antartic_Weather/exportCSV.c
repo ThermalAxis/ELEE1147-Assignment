@@ -84,8 +84,10 @@ int exportCSV(TelemetryData *telemetryArray, int arraySize) {
 
 int exportAll(TelemetryData *telemetryArray, int arraySize) {
 
+  // export all data in the telemetry array
+
   FILE *outputFile;
-  // Open output file for writing
+  // Open output file for writing / error if cannot open file
   outputFile = fopen("export.csv", "w");
   if (outputFile == NULL) {
     perror("Error opening output file");
@@ -95,7 +97,6 @@ int exportAll(TelemetryData *telemetryArray, int arraySize) {
   printf("Writing data...");
   if (fprintf(outputFile, "Timestamp, sensorID, SensorType, Location, "
                           "Measurement, Status\n") < 0) {
-    // Handle output error using perror()
     perror("Error writing output to file");
     fclose(outputFile); // Close the output file before exiting
     return 1;           // Exit with an error code
@@ -105,6 +106,7 @@ int exportAll(TelemetryData *telemetryArray, int arraySize) {
               telemetryArray[i].sensorID, telemetryArray[i].sensorType,
               telemetryArray[i].location, telemetryArray[i].measurement,
               telemetryArray[i].status);
+      // print all data in CSV format
     }
   }
   fclose(outputFile); // Close outputFile
@@ -117,6 +119,8 @@ int exportAll(TelemetryData *telemetryArray, int arraySize) {
 
 int exportLocation(TelemetryData *telemetryArray, int arraySize,
                    char *locationName) {
+
+  // export all data for a user defined location
 
   FILE *outputFile;
   // Open output file for writing
@@ -136,6 +140,7 @@ int exportLocation(TelemetryData *telemetryArray, int arraySize,
     return 1;           // Exit with an error code
   } else {
     for (int i = 0; i < arraySize; ++i) {
+      // iterate over the telemetry data and print to file if location matches
       if (strcmp(telemetryArray[i].location, locationName) == 0) {
         fprintf(outputFile, "%s,%s,%s,%s,%f,%s\n", telemetryArray[i].timestamp,
                 telemetryArray[i].sensorID, telemetryArray[i].sensorType,
@@ -155,6 +160,9 @@ int exportLocation(TelemetryData *telemetryArray, int arraySize,
 
 int exportSensorType(TelemetryData *telemetryArray, int arraySize,
                      char *sensorType) {
+
+  // export all data for a user defined sensor type
+
   FILE *outputFile;
   // Open output file for writing
   outputFile = fopen("export.csv", "w");
@@ -173,6 +181,8 @@ int exportSensorType(TelemetryData *telemetryArray, int arraySize,
     return 1;           // Exit with an error code
   } else {
     for (int i = 0; i < arraySize; ++i) {
+      // iterate over the telemetry array and print to file if sensorType
+      // matches
       if (strcmp(telemetryArray[i].sensorType, sensorType) == 0) {
         fprintf(outputFile, "%s,%s,%s,%s,%f,%s\n", telemetryArray[i].timestamp,
                 telemetryArray[i].sensorID, telemetryArray[i].sensorType,
@@ -193,6 +203,8 @@ int exportSensorType(TelemetryData *telemetryArray, int arraySize,
 int exportSensorID(TelemetryData *telemetryArray, int arraySize,
                    char *sensorID) {
 
+  // export all data for a user defined sensorID
+
   FILE *outputFile;
   // Open output file for writing
   outputFile = fopen("export.csv", "w");
@@ -211,6 +223,7 @@ int exportSensorID(TelemetryData *telemetryArray, int arraySize,
     return 1;           // Exit with an error code
   } else {
     for (int i = 0; i < arraySize; ++i) {
+      // iterate over telemetry array and print to file if sensorID matches
       if (strcmp(telemetryArray[i].sensorID, sensorID) == 0) {
         fprintf(outputFile, "%s,%s,%s,%s,%f,%s\n", telemetryArray[i].timestamp,
                 telemetryArray[i].sensorID, telemetryArray[i].sensorType,
